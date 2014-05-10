@@ -200,6 +200,12 @@ class Base(Configuration):
     LANGUAGE_CODE = values.Value('en-us')
     LANGUAGES = (
         ('en', gettext('English')),
+        ('fi-fi', gettext('Finnish (Finland)')),
+        ('de', gettext('German')),
+        ('it', gettext('Italian')),
+        ('pt', gettext('Portuguese')),
+        ('sv-se', gettext('Swedish (Sweden)')),
+        ('sv-fi', gettext('Swedish (Finland)')),
         ('zh-cn', gettext('Chinese (Simplified)')),
         ('zh-hk', gettext('Chinese (Traditional, Hong Kong)')),
     )
