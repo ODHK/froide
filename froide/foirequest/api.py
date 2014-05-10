@@ -9,6 +9,8 @@ from tastypie import fields, utils
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.authorization import DjangoAuthorization
 
+from taggit.models import Tag
+
 from froide.helper.api_utils import AnonymousGetAuthentication
 
 from .models import FoiRequest, FoiMessage, FoiAttachment
@@ -74,6 +76,11 @@ class FoiMessageResource(ModelResource):
         return bundle
 
 
+class TagResource(ModelResource):
+    class Meta:
+        queryset = Tag.objects.all()
+
+
 class FoiRequestResource(ModelResource):
     public_body = fields.ToOneField('froide.publicbody.api.PublicBodyResource', 'public_body', null=True)
     messages = fields.ToManyField(FoiMessageResource, 'foimessage_set',
@@ -85,6 +92,7 @@ class FoiRequestResource(ModelResource):
     jurisdiction = fields.ToOneField(
         'froide.publicbody.api.JurisdictionResource',
         'jurisdiction', null=True)
+    tags = fields.ToManyField(TagResource, 'tags', full=True)
 
     class Meta:
         allowed_methods = ['get', 'put']
@@ -115,6 +123,7 @@ class FoiRequestResource(ModelResource):
             'jurisdiction': ALL,
             'jurisdiction': ALL,
             'public': ALL,
+            'tags': ALL,
             'same_as': ALL,
             'status': ALL,
             'public_body': ALL_WITH_RELATIONS
@@ -128,9 +137,6 @@ class FoiRequestResource(ModelResource):
             bundle.data['description'] = bundle.obj.get_description()
             bundle.data['status_name'] = bundle.obj.readable_status
             bundle.data['site_url'] = bundle.obj.get_absolute_domain_url()
-            bundle.data['tags'] = [{'slug': t.slug, 'name': t.name}
-                for t in bundle.obj.tags.all()
-            ]
         return bundle
 
     def prepend_urls(self):
@@ -138,11 +144,15 @@ class FoiRequestResource(ModelResource):
             url(r"^(?P<resource_name>%s)/search%s$" % (
                     self._meta.resource_name,
                     utils.trailing_slash()
-                ), self.wrap_view('get_search'), name="api_get_search"),
+            ), self.wrap_view('get_search'), name="api_get_search"),
             url(r"^(?P<resource_name>%s)/simplesearch%s$" % (
                     self._meta.resource_name,
                     utils.trailing_slash()
-                ), self.wrap_view('get_simple_search'), name="api_get_simple_search"),
+            ), self.wrap_view('get_simple_search'), name="api_get_simple_search"),
+            url(r"^(?P<resource_name>%s)/tags/autocomplete%s$" % (
+                    self._meta.resource_name,
+                    utils.trailing_slash()
+            ), self.wrap_view('get_tags_autocomplete'), name="api_get_tags_autocomplete"),
         ]
 
     def get_simple_search(self, request, **kwargs):
@@ -190,3 +200,17 @@ class FoiRequestResource(ModelResource):
         }
 
         return self.create_response(request, object_list)
+
+    def get_tags_autocomplete(self, request, **kwargs):
+        self.method_check(request, allowed=['get'])
+
+        query = request.GET.get('query', '')
+        if len(query) < 2:
+            return []
+        tags = Tag.objects.filter(name__istartswith=query)
+        kind = request.GET.get('kind', '')
+        if kind:
+            tags = tags.filter(kind=kind)
+        tags = [t.encode('utf-8') for t in tags.values_list('name', flat=True)]
+
+        return self.create_response(request, tags)

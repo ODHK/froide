@@ -20,7 +20,7 @@ from django.template.loader import render_to_string
 from django.utils.timesince import timesince
 from django.core.mail import send_mail, mail_managers
 from django.utils.safestring import mark_safe
-from django.utils.html import escape
+from django.utils.html import escape, strip_tags
 from django.utils.crypto import salted_hmac, constant_time_compare
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
@@ -31,7 +31,7 @@ from taggit.models import TaggedItemBase
 from froide.publicbody.models import PublicBody, FoiLaw, Jurisdiction
 from froide.helper.email_utils import make_address
 from froide.helper.text_utils import (replace_email_name,
-        replace_email, shorten_text, strip_all_tags)
+        replace_email, shorten_text)
 
 from .foi_mail import send_foi_mail, package_foirequest
 
@@ -93,10 +93,11 @@ class PublishedFoiRequestManager(CurrentSiteManager):
     def get_resolution_count_by_public_body(self, obj):
         res = self.get_query_set().filter(
                 status='resolved', public_body=obj
-            ).values('resolution'
-            ).annotate(
-                models.Count('resolution')
-            ).order_by('-resolution__count')
+        ).values('resolution'
+        ).annotate(
+            models.Count('resolution')
+        ).order_by('-resolution__count')
+
         return [{
             'resolution': x['resolution'],
             'url_slug': FoiRequest.get_url_from_status(x['resolution']),
@@ -526,15 +527,16 @@ class FoiRequest(models.Model):
         addresses = {}
         for message in reversed(self.messages):
             if message.is_response:
-                if message.sender_email and not message.sender_email in addresses:
+                if message.sender_email and message.sender_email not in addresses:
                     addresses[message.sender_email] = message
         return addresses
 
     def public_body_suggestions(self):
         if not hasattr(self, "_public_body_suggestion"):
             self._public_body_suggestion = \
-                    PublicBodySuggestion.objects.filter(request=self) \
-                        .select_related("public_body", "request")
+                    PublicBodySuggestion.objects.filter(
+                        request=self
+                    ).select_related("public_body", "request")
         return self._public_body_suggestion
 
     def get_auth_code(self):
@@ -564,27 +566,29 @@ class FoiRequest(models.Model):
         return list(self.messages)[-1].get_quoted()
 
     def find_public_body_for_email(self, email):
-        if not email or not '@' in email:
+        if not email or '@' not in email:
             return self.public_body
         messages = list(reversed(self.messages))
         domain = email.split('@', 1)[1]
         for m in messages:
             if m.is_response:
-                if not m.sender_public_body:
+                if not m.sender_public_body or not m.sender_email:
                     continue
-                if m.sender_email == email:
+                sender_email = m.sender_email.lower()
+                if sender_email == email:
                     return m.sender_public_body
-                if ('@' in m.sender_email and
-                        m.sender_email.split('@')[1] == domain):
+                if ('@' in sender_email and
+                        sender_email.split('@')[1] == domain):
                     return m.sender_public_body
         for m in messages:
             if not m.is_response:
-                if not m.recipient_public_body:
+                if not m.recipient_public_body or not m.recipient_email:
                     continue
-                if m.recipient_email == email:
+                recipient_email = m.recipient_email.lower()
+                if recipient_email == email:
                     return m.recipient_public_body
-                if ('@' in m.recipient_email and
-                        m.recipient_email.split('@')[1] == domain):
+                if ('@' in recipient_email and
+                        recipient_email.split('@')[1] == domain):
                     return m.recipient_public_body
         return self.public_body
 
@@ -640,7 +644,7 @@ class FoiRequest(models.Model):
         message.plaintext = email['body']
         message.html = email['html']
         if not message.plaintext and message.html:
-            message.plaintext = strip_all_tags(email['html'])
+            message.plaintext = strip_tags(email['html'])
         message.subject_redacted = message.redact_subject()[:250]
         message.plaintext_redacted = message.redact_plaintext()
         message.save()
@@ -1013,10 +1017,11 @@ class FoiRequest(models.Model):
         if not self.user.email:
             return
         send_mail(u'{0} [#{1}]'.format(
-                _("%(site_name)s: Please classify the reply to your request")
-                    % {"site_name": settings.SITE_NAME},
+                _("%(site_name)s: Please classify the reply to your request") % {
+                    "site_name": settings.SITE_NAME
+                },
                 self.pk
-            ),
+        ),
             render_to_string("foirequest/emails/classification_reminder.txt", {
                 "request": self,
                 "go_url": self.user.get_autologin_url(self.get_absolute_short_url()),
@@ -1196,7 +1201,7 @@ class FoiMessage(models.Model):
         return render_to_string('foirequest/emails/formated_message.txt', {
                 'message': self,
                 'attachments': attachments
-            })
+        })
 
     def get_quoted(self):
         return u"\n".join([u">%s" % l for l in self.plaintext.splitlines()])
@@ -1291,20 +1296,21 @@ class FoiMessage(models.Model):
 
         greeting_replacement = str(_("<< Greeting >>"))
 
-        if not settings.FROIDE_CONFIG.get('show_public_body_employee_name'):
+        if not settings.FROIDE_CONFIG.get('public_body_officials_public'):
             if self.is_response:
+                if settings.FROIDE_CONFIG.get('closings'):
+                    for closing in settings.FROIDE_CONFIG['closings']:
+                        match = closing.search(content)
+                        if match is not None:
+                            content = content[:match.end()]
+                            break
+            else:
                 if settings.FROIDE_CONFIG.get('greetings'):
                     for greeting in settings.FROIDE_CONFIG['greetings']:
-                        match = greeting.search(content, re.I)
+                        match = greeting.search(content)
                         if match is not None and len(match.groups()):
                             content = content.replace(match.group(1),
                                 greeting_replacement)
-            else:
-                if settings.FROIDE_CONFIG.get('closings'):
-                    for closing in settings.FROIDE_CONFIG['closings']:
-                        match = closing.search(content, re.I)
-                        if match is not None:
-                            content = content[:match.end()]
 
         return content
 

@@ -249,7 +249,8 @@ class PublicBody(models.Model):
     depth = models.SmallIntegerField(default=0)
     classification = models.CharField(_("Classification"), max_length=255,
             blank=True)
-    classification_slug = models.SlugField(_("Classification Slug"), max_length=255)
+    classification_slug = models.SlugField(_("Classification Slug"), max_length=255,
+            blank=True)
 
     email = models.EmailField(_("Email"), null=True, blank=True)
     contact = models.TextField(_("Contact"), blank=True)
@@ -265,8 +266,8 @@ class PublicBody(models.Model):
             verbose_name=_("Updated by"),
             blank=True, null=True, related_name='public_body_updaters',
             on_delete=models.SET_NULL, default=1)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(_("Created at"), default=timezone.now)
+    updated_at = models.DateTimeField(_("Updated at"), default=timezone.now, auto_now=True)
     confirmed = models.BooleanField(_("confirmed"), default=True)
 
     number_of_requests = models.IntegerField(_("Number of requests"),
@@ -314,6 +315,10 @@ class PublicBody(models.Model):
     @property
     def request_note_html(self):
         return markdown(self.request_note)
+
+    @property
+    def tag_list(self):
+        return edit_string_for_tags(self.tags.all())
 
     @property
     def default_law(self):

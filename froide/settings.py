@@ -6,7 +6,7 @@ import os
 import sys
 import re
 
-rec = re.compile
+rec = lambda x: re.compile(x, re.I | re.U)
 
 gettext = lambda s: s
 
@@ -56,7 +56,7 @@ class Base(Configuration):
 
     CACHES = values.CacheURLValue('dummy://')
 
-    ############## Site Configuration #########
+    # ############# Site Configuration #########
 
     # Make this unique, and don't share it with anybody.
     SECRET_KEY = 'make_me_unique!!'
@@ -75,7 +75,7 @@ class Base(Configuration):
 
     INTERNAL_IPS = values.TupleValue(('127.0.0.1',))
 
-    ############### PATHS ###############
+    # ############## PATHS ###############
 
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -99,7 +99,10 @@ class Base(Configuration):
     STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_ROOT, "..", "public"))
 
     # Additional locations of static files
-    COMPRESS_ENABLED = False
+    STATICFILES_DIRS = (
+        os.path.join(PROJECT_ROOT, "static"),
+    )
+    COMPRESS_ENABLED = values.BooleanValue(False)
     COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.JSMinFilter']
     COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter',
                             'compressor.filters.cssmin.CSSMinFilter']
@@ -110,7 +113,7 @@ class Base(Configuration):
         os.path.join(PROJECT_ROOT, "templates"),
     )
 
-    ########### URLs #################
+    # ########## URLs #################
 
     ROOT_URLCONF = values.Value('froide.urls')
 
@@ -129,13 +132,13 @@ class Base(Configuration):
     USE_X_ACCEL_REDIRECT = values.BooleanValue(False)
     X_ACCEL_REDIRECT_PREFIX = values.Value('/protected')
 
-    ### URLs that can be translated to a secret value
+    # ## URLs that can be translated to a secret value
 
     SECRET_URLS = values.DictValue({
         "admin": "admin"
     })
 
-    ######### Backends, Finders, Processors, Classes ####
+    # ######## Backends, Finders, Processors, Classes ####
 
     AUTH_USER_MODEL = values.Value('account.User')
     CUSTOM_AUTH_USER_MODEL_DB = values.Value('')
@@ -180,7 +183,7 @@ class Base(Configuration):
         'django.contrib.messages.middleware.MessageMiddleware',
     ]
 
-    ########## I18N and L10N ##################
+    # ######### I18N and L10N ##################
 
     # Local time zone for this installation. Choices can be found here:
     # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -197,14 +200,14 @@ class Base(Configuration):
     LANGUAGE_CODE = values.Value('en-us')
     LANGUAGES = (
         ('en', gettext('English')),
+        ('fi-fi', gettext('Finnish (Finland)')),
         ('de', gettext('German')),
-        ('fi', gettext('Finnish')),
         ('it', gettext('Italian')),
+        ('pt', gettext('Portuguese')),
         ('sv-se', gettext('Swedish (Sweden)')),
         ('sv-fi', gettext('Swedish (Finland)')),
-        ('fi-fi', gettext('Finnish (Finland)')),
-        ('pt', gettext('Portuguese')),
-        ('zh-cn', gettext('Chinese')),
+        ('zh-cn', gettext('Chinese (Simplified)')),
+        ('zh-hk', gettext('Chinese (Traditional, Hong Kong)')),
     )
 
     # If you set this to False, Django will make some optimizations so as not
@@ -235,7 +238,7 @@ class Base(Configuration):
     # Calculates other holidays based on easter sunday
     HOLIDAYS_FOR_EASTER = (0, -2, 1, 39, 50, 60)
 
-    ######### Logging ##########
+    # ######## Logging ##########
 
     # A sample logging configuration.
     LOGGING = {
@@ -285,7 +288,7 @@ class Base(Configuration):
         }
     }
 
-    ######### Security ###########
+    # ######## Security ###########
 
     CSRF_COOKIE_SECURE = False
     CSRF_COOKIE_HTTPONLY = True
@@ -298,7 +301,7 @@ class Base(Configuration):
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SECURE = False
 
-    ######### Celery #############
+    # ######## Celery #############
 
     CELERY_RESULT_BACKEND = values.Value('djcelery.backends.database:DatabaseBackend')
     CELERYBEAT_SCHEDULER = values.Value("djcelery.schedulers.DatabaseScheduler")
@@ -308,7 +311,7 @@ class Base(Configuration):
         'froide.foirequest.tasks.fetch_mail': {"queue": "emailfetch"},
     }
 
-    ######### Haystack ###########
+    # ######## Haystack ###########
 
     HAYSTACK_CONNECTIONS = {
         'default': {
@@ -316,11 +319,11 @@ class Base(Configuration):
         }
     }
 
-    ########## Tastypie #########
+    # ######### Tastypie #########
 
     TASTYPIE_SWAGGER_API_MODULE = values.Value('froide.urls.v1_api')
 
-    ########## Froide settings ########
+    # ######### Froide settings ########
 
     FROIDE_THEME = None
 
@@ -343,10 +346,9 @@ class Base(Configuration):
         allow_pseudonym=False,
         doc_conversion_binary=None,  # replace with libreoffice instance
         doc_conversion_call_func=None,  # see settings_test for use
-        show_public_body_employee_name=True
     )
 
-    ####### Email ##############
+    # ###### Email ##############
 
     # Django settings
 
@@ -390,6 +392,10 @@ class Base(Configuration):
     # or can you send from any address you like?
     FOI_EMAIL_FIXED_FROM_ADDRESS = values.BooleanValue(True)
 
+    SOUTH_MIGRATION_MODULES = {
+        'taggit': 'taggit.south_migrations',
+    }
+
 
 class Dev(Base):
     pass
@@ -429,7 +435,10 @@ class Test(Base):
         config = dict(super(Test, self).FROIDE_CONFIG)
         config.update(dict(
             doc_conversion_call_func=self._fake_convert_pdf,
-            default_law=10000
+            default_law=10000,
+            greetings=[rec(u"Dear ((?:Mr\.?|Ms\.?) .*),?"), rec(u'Sehr geehrter? ((Herr|Frau) .*),?')],
+            closings=[rec(u"Sincerely yours,?"), rec(u'Mit freundlichen Grüßen')],
+            public_body_officials_public=False
         ))
         return config
 
@@ -530,8 +539,8 @@ class Production(Base):
     TEMPLATE_DEBUG = False
     ALLOWED_HOSTS = values.TupleValue(('example.com',))
     CELERY_ALWAYS_EAGER = values.BooleanValue(False)
-    COMPRESS_ENABLED = True
-    COMPRESS_OFFLINE = True
+    COMPRESS_ENABLED = values.BooleanValue(True)
+    COMPRESS_OFFLINE = values.BooleanValue(True)
 
 
 class SSLSite(object):
@@ -550,19 +559,27 @@ class SSLNginxProduction(SSLSite, NginxSecureStatic, Production):
 
 
 class AmazonS3(object):
-    STATICFILES_STORAGE = values.Value('storages.backends.s3boto.S3BotoStorage')
+    STATICFILES_STORAGE = values.Value('froide.helper.storage_utils.CachedS3BotoStorage')
+    COMPRESS_STORAGE = values.Value('froide.helper.storage_utils.CachedS3BotoStorage')
+
+    STATIC_URL = values.Value('/static/')
+    COMPRESS_URL = values.Value(STATIC_URL)
+
     DEFAULT_FILE_STORAGE = values.Value('storages.backends.s3boto.S3BotoStorage')
 
     AWS_ACCESS_KEY_ID = values.Value('')
     AWS_SECRET_ACCESS_KEY = values.Value('')
     AWS_STORAGE_BUCKET_NAME = values.Value('')
     AWS_S3_SECURE_URLS = values.Value(False)
+    AWS_QUERYSTRING_AUTH = values.Value(False)
 
 
 class Heroku(Production):
     ALLOWED_HOSTS = ['*']
     SECRET_KEY = values.SecretValue()
-    CELERY_ALWAYS_EAGER = True
+
+    CELERY_ALWAYS_EAGER = values.BooleanValue(True)
+    BROKER_URL = values.Value('amqp://')
 
     @property
     def LOGGING(self):

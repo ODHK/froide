@@ -27,8 +27,9 @@ def send_notification_became_overdue(sender, **kwargs):
     if not sender.user.email:
         return
     send_mail(u'{0} [#{1}]'.format(
-                _("%(site_name)s: Request became overdue")
-                    % {"site_name": settings.SITE_NAME},
+                _("%(site_name)s: Request became overdue") % {
+                    "site_name": settings.SITE_NAME
+                },
                 sender.pk),
             render_to_string("foirequest/emails/became_overdue.txt", {
                 "request": sender,
@@ -47,8 +48,9 @@ def send_notification_became_asleep(sender, **kwargs):
     if not sender.user.email:
         return
     send_mail(u'{0} [#{1}]'.format(
-                _("%(site_name)s: Request became asleep")
-                    % {"site_name": settings.SITE_NAME},
+                _("%(site_name)s: Request became asleep") % {
+                    "site_name": settings.SITE_NAME
+                },
                 sender.pk),
             render_to_string("foirequest/emails/became_asleep.txt", {
                 "request": sender,
@@ -69,8 +71,9 @@ def notify_user_message_received(sender, message=None, **kwargs):
     if not sender.user.email:
         return
     send_mail(u'{0} [#{1}]'.format(
-                _("%(site_name)s: New reply to your request")
-                    % {"site_name": settings.SITE_NAME},
+                _("%(site_name)s: New reply to your request") % {
+                    "site_name": settings.SITE_NAME
+                },
                 sender.pk),
             render_to_string("foirequest/emails/message_received_notification.txt", {
                 "message": message,
@@ -89,8 +92,9 @@ def notify_user_message_received(sender, message=None, **kwargs):
 def notify_user_public_body_suggested(sender, suggestion=None, **kwargs):
     if sender.user != suggestion.user:
         send_mail(u'{0} [#{1}]'.format(
-                    _("%(site_name)s: New suggestion for a Public Body")
-                        % {"site_name": settings.SITE_NAME},
+                    _("%(site_name)s: New suggestion for a Public Body") % {
+                        "site_name": settings.SITE_NAME
+                    },
                     sender.pk),
                 render_to_string("foirequest/emails/public_body_suggestion_received.txt", {
                     "suggestion": suggestion,
@@ -102,6 +106,22 @@ def notify_user_public_body_suggested(sender, suggestion=None, **kwargs):
                 }),
                 settings.DEFAULT_FROM_EMAIL,
                 [sender.user.email])
+
+
+@receiver(FoiRequest.message_sent,
+        dispatch_uid="set_last_message_date_on_message_sent")
+def set_last_message_date_on_message_sent(sender, message=None, **kwargs):
+    if message is not None:
+        sender.last_message = message.timestamp
+        sender.save()
+
+
+@receiver(FoiRequest.message_received,
+        dispatch_uid="set_last_message_date_on_message_received")
+def set_last_message_date_on_message_received(sender, message=None, **kwargs):
+    if message is not None:
+        sender.last_message = message.timestamp
+        sender.save()
 
 
 @receiver(FoiRequest.message_sent,

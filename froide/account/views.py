@@ -44,7 +44,7 @@ def confirm(request, user_id, secret, request_id=None):
             if 'next' in request.session:
                 del request.session['next']
             return redirect(next)
-        return redirect(reverse('account-show') + "?new#change-password-now")
+        return redirect(reverse('account-settings') + "?new#change-password-now")
     else:
         messages.add_message(request, messages.ERROR,
                 _('You can only use the confirmation link once, please login with your password.'))
@@ -126,9 +126,9 @@ def login(request, base="base.html", context=None,
     initial = None
     if not context:
         context = {}
-    if not "reset_form" in context:
+    if "reset_form" not in context:
         context['reset_form'] = PasswordResetForm()
-    if not "signup_form" in context:
+    if "signup_form" not in context:
         context['signup_form'] = NewUserForm()
 
     if request.GET.get("simple") is not None:
@@ -286,9 +286,9 @@ def account_settings(request, context=None, status=200):
         context = {}
     if 'new' in request.GET:
         request.user.is_new = True
-    if not 'user_delete_form' in context:
+    if 'user_delete_form' not in context:
         context['user_delete_form'] = UserDeleteForm(request.user)
-    if not 'change_email_form' in context:
+    if 'change_email_form' not in context:
         context['change_email_form'] = UserChangeEmailForm()
     return render(request, 'account/settings.html', context, status=status)
 
@@ -380,6 +380,8 @@ def new_terms(request, next=None):
         form = TermsForm(request.POST)
         if form.is_valid():
             form.save(request.user)
+            messages.add_message(request, messages.SUCCESS,
+                _('Thank you for accepting our new terms!'))
             return redirect(next)
         else:
             messages.add_message(request, messages.ERROR,

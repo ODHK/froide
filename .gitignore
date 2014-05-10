@@ -17,3 +17,6 @@ dist/
 *.egg-info
 *.log
 .nfs*
+*~
+.#*
+\#*\#
