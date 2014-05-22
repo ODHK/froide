@@ -1,20 +1,18 @@
 import json
 import magic
 
-import floppyforms as forms
-
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
 from django.utils import timezone
 
-from taggit.forms import TagField
-from taggit.utils import edit_string_for_tags
+import floppyforms as forms
 
 from froide.publicbody.models import PublicBody
 from froide.publicbody.widgets import PublicBodySelect
 from froide.helper.widgets import PriceInput
+from froide.helper.forms import TagObjectForm
 
 from .models import FoiRequest, FoiAttachment
 
@@ -67,8 +65,8 @@ class RequestForm(forms.Form):
             widget=forms.RadioSelect if not hidden else forms.HiddenInput,
             initial=default_law.pk,
             choices=((l.pk, mark_safe(
-                '%(name)s<span class="lawinfo">%(description)s</span>' %
-                    {"name": escape(l.name),
+                '%(name)s<span class="lawinfo">%(description)s</span>' % {
+                    "name": escape(l.name),
                     "description": l.description_html
                 })) for l in list_of_laws))
 
@@ -148,10 +146,10 @@ class MessagePublicBodySenderForm(forms.Form):
             widget=PublicBodySelect, min_value=1)
 
     def __init__(self, message, *args, **kwargs):
-        if not "initial" in kwargs:
+        if "initial" not in kwargs:
             if message.sender_public_body:
                 kwargs['initial'] = {"sender": message.sender_public_body.id}
-        if not "prefix" in kwargs:
+        if "prefix" not in kwargs:
             kwargs['prefix'] = "m%d" % message.id
         self.message = message
         super(MessagePublicBodySenderForm, self).__init__(*args, **kwargs)
@@ -259,8 +257,8 @@ class PublicBodySuggestionsForm(forms.Form):
             widget=forms.RadioSelect,
             choices=((s.public_body.id, mark_safe(
                 '''%(name)s - <a class="info-link" href="%(url)s">%(link)s</a><br/>
-                <span class="help">%(reason)s</span>''' %
-                    {"name": escape(s.public_body.name),
+                <span class="help">%(reason)s</span>''' % {
+                    "name": escape(s.public_body.name),
                     "url": s.public_body.get_absolute_url(),
                     "link": _("More Info"),
                     "reason": _("Reason for this suggestion: %(reason)s") % {"reason": s.reason}
@@ -273,8 +271,9 @@ class FoiRequestStatusForm(forms.Form):
         self.foirequest = foirequest
         self.fields['refusal_reason'] = forms.ChoiceField(
             label=_("Refusal Reason"),
-            choices=[('', _('No or other reason given'))] +
-                foirequest.law.get_refusal_reason_choices(),
+            choices=[('', _('No or other reason given'))] + (
+                foirequest.law.get_refusal_reason_choices()
+            ),
             required=False,
             widget=forms.Select(attrs={'class': 'form-control'}),
             help_text=_('When you are (partially) denied access to information, the Public Body should always state the reason.')
@@ -371,15 +370,17 @@ class ConcreteLawForm(forms.Form):
         self.foirequest = foirequest
         self.possible_laws = foirequest.law.combined.all()
         self.fields['law'] = forms.TypedChoiceField(label=_("Information Law"),
-                choices=[('', '-------')] +
-                    list(map(lambda x: (x.pk, x.name), self.possible_laws)),
-                coerce=int, empty_value='')
+            choices=([('', '-------')] +
+                    list(map(lambda x: (x.pk, x.name), self.possible_laws))),
+            coerce=int,
+            empty_value=''
+        )
 
     def clean(self):
         if self.foirequest.law is None or not self.foirequest.law.meta:
             raise forms.ValidationError(_("Invalid FoI Request for this operation"))
         indexed_laws = dict([(l.pk, l) for l in self.possible_laws])
-        if not "law" in self.cleaned_data:
+        if "law" not in self.cleaned_data:
             return
         if self.cleaned_data["law"]:
             self.foi_law = indexed_laws[self.cleaned_data["law"]]
@@ -402,11 +403,13 @@ class PostalScanMixin(object):
             scan.seek(0)
             if content_type:
                 scan.content_type = content_type
-            if not content_type in FoiAttachment.POSTAL_CONTENT_TYPES:
+            if content_type not in FoiAttachment.POSTAL_CONTENT_TYPES:
                 raise forms.ValidationError(
-                        _('The scanned letter must be either PDF, JPG or PNG,'
-                          ' but was detected as %(content_type)s!') %
-                            {'content_type': content_type})
+                    _('The scanned letter must be either PDF, JPG or PNG,'
+                        ' but was detected as %(content_type)s!') % {
+                            'content_type': content_type
+                        }
+                )
         return scan
 
 
@@ -461,16 +464,5 @@ class PostalAttachmentForm(forms.Form, PostalScanMixin):
             help_text=PostalReplyForm.scan_help_text)
 
 
-class TagFoiRequestForm(forms.Form):
-    tags = TagField(label=_("Tags"),
-        widget=forms.TextInput(attrs={'placeholder': _('Tags')}),
-        help_text=_("Comma separated and quoted"))
-
-    def __init__(self, foirequest, *args, **kwargs):
-        self.foirequest = foirequest
-        kwargs['initial'] = {'tags': edit_string_for_tags([o for o in foirequest.tags.all()])}
-        super(TagFoiRequestForm, self).__init__(*args, **kwargs)
-
-    def save(self):
-        self.foirequest.tags.set(*self.cleaned_data['tags'])
-        self.foirequest.save()
+class TagFoiRequestForm(TagObjectForm):
+    resource_name = 'request'

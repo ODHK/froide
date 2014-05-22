@@ -11,7 +11,7 @@ from tastypie.constants import ALL, ALL_WITH_RELATIONS
 
 from froide.helper.api_utils import AnonymousGetAuthentication
 
-from .models import PublicBody, Jurisdiction, FoiLaw
+from .models import PublicBody, PublicBodyTag, Jurisdiction, FoiLaw
 
 AUTOCOMPLETE_MAX_CHAR = 15
 AUTOCOMPLETE_MIN_CHAR = 3
@@ -62,6 +62,11 @@ class FoiLawResource(ModelResource):
         return bundle
 
 
+class PublicBodyTagResource(ModelResource):
+    class Meta:
+        queryset = PublicBodyTag.objects.all()
+
+
 class PublicBodyResource(ModelResource):
     laws = fields.ToManyField(FoiLawResource, 'laws',
         full=True)
@@ -73,6 +78,7 @@ class PublicBodyResource(ModelResource):
         'parent', null=True)
     root = fields.ToOneField('froide.publicbody.api.PublicBodyResource',
         'parent', null=True)
+    tags = fields.ToManyField(PublicBodyTagResource, 'tags', full=True)
 
     class Meta:
         queryset = PublicBody.objects.all()
@@ -90,6 +96,7 @@ class PublicBodyResource(ModelResource):
             "slug": ALL,
             "number_of_requests": ALL,
             "jurisdiction": ALL_WITH_RELATIONS,
+            "tags": ALL
             # Technically possible, but API docs
             # generation currently crashes here
             # "root": ALL_WITH_RELATIONS,
@@ -110,11 +117,15 @@ class PublicBodyResource(ModelResource):
             url(r"^(?P<resource_name>%s)/search%s$" % (
                     self._meta.resource_name,
                     utils.trailing_slash()
-                ), self.wrap_view('get_search'), name="api_get_search"),
+            ), self.wrap_view('get_search'), name="api_get_search"),
             url(r"^(?P<resource_name>%s)/autocomplete%s$" % (
                     self._meta.resource_name,
                     utils.trailing_slash()
-                ), self.wrap_view('get_autocomplete'), name="api_get_autocomplete"),
+            ), self.wrap_view('get_autocomplete'), name="api_get_autocomplete"),
+            url(r"^(?P<resource_name>%s)/tags/autocomplete%s$" % (
+                    self._meta.resource_name,
+                    utils.trailing_slash()
+            ), self.wrap_view('get_tags_autocomplete'), name="api_get_tags_autocomplete"),
         ]
 
     def get_autocomplete(self, request, **kwargs):
@@ -140,8 +151,10 @@ class PublicBodyResource(ModelResource):
             pb = sqs[0]
             if pb.jurisdiction is not None:
                 jur_get = lambda pb: pb.jurisdiction
-            else:
+            elif pb.object is not None:
                 jur_get = lambda pb: pb.object.jurisdiction.name
+            else:
+                jur_get = lambda pb: None
 
             sqs = sorted(sqs, key=lambda x: x.name)
             names = [u"%s (%s)" % (x.name, jur_get(x)) for x in sqs]
@@ -154,6 +167,20 @@ class PublicBodyResource(ModelResource):
         }
 
         return self.create_response(request, response)
+
+    def get_tags_autocomplete(self, request, **kwargs):
+        self.method_check(request, allowed=['get'])
+
+        query = request.GET.get('query', '')
+        if len(query) < 2:
+            return []
+        tags = PublicBodyTag.objects.filter(name__istartswith=query)
+        kind = request.GET.get('kind', '')
+        if kind:
+            tags = tags.filter(kind=kind)
+        tags = [t.encode('utf-8') for t in tags.values_list('name', flat=True)]
+
+        return self.create_response(request, tags)
 
     def get_search(self, request, **kwargs):
         self.method_check(request, allowed=['get'])

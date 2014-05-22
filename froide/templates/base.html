@@ -53,26 +53,25 @@
             {% if LANGUAGES|length > 1 %}
             <li class="dropdown">
               {% csrf_token %}
-              {% get_language_info_list for LANGUAGES as languages %}
-              {% for language in languages %}
-                {% if language.code == LANGUAGE_CODE %}
+              {% for lang_code, language in LANGUAGES %}
+                {% if lang_code == CURRENT_LANGUAGE_CODE %}
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    {{ language.name }}
+                    {{ language }}
                     <b class="caret"></b>
                   </a>
                 {% endif %}
               {% endfor %}
               <ul class="dropdown-menu">
-                {% for language in languages %}
-                <li>
-                  <form action="{% url 'set_language' %}" method="post">
-                    {% csrf_token %}
-                    <button class="btn btn-link" name="language" value="{{ language.code }}">
-                      {{ language.name_local|title }}
-                    </button>
-                    {% if language.code == LANGUAGE_CODE %}&times;{% endif %}
-                  </form>
-                </li>
+                {% for lang_code, language in LANGUAGES %}
+                  <li>
+                    <form action="{% url 'set_language' %}" method="post">
+                      {% csrf_token %}
+                      <button class="btn btn-link" name="language" value="{{ lang_code }}">
+                        {{ language|title }}
+                      </button>
+                      {% if lang_code == CURRENT_LANGUAGE_CODE %}&times;{% endif %}
+                    </form>
+                  </li>
                 {% endfor %}
               </ul>
             </li>
@@ -130,7 +129,10 @@
 
   <footer class="container" id="footer">
     <hr/>
-    {% block footer %}
+  {% block footer %}
+    {% block footer_above %}
+    {% endblock footer_above %}
+    {% block footer_credits %}
     <div class="row">
       <div class="col-lg-9">
         {% block footer_description %}
@@ -149,6 +151,7 @@
       </div>
     </div>
     <hr/>
+    {% endblock footer_credits %}
     <div class="row">
       <ul class="col-lg-12 unstyled pagination-centered">
         {% block footer_menu %}
@@ -168,16 +171,18 @@
         {% endblock %}
       </ul>
     </div>
-    {% endblock %}
+    {% block footer_below %}
+    {% endblock footer_below %}
+  {% endblock footer %}
   </footer>
 {% endblock body_tag %}
 
 {% block scripts %}
   {% compress js %}
-  <script src="{% static "js/libs/jquery.js" %}"></script>
-  <script src="{% static "js/bootstrap.min.js" %}"></script>
-  <script src="{% static "js/libs/mustache.js" %}"></script>
-  <script src="{% static "js/libs/jquery.autocomplete.js" %}"></script>
-  <script src="{% static "js/script.js" %}"></script>
+  <script src="{{ STATIC_URL }}js/libs/jquery.js"></script>
+  <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+  <script src="{{ STATIC_URL }}js/libs/mustache.js"></script>
+  <script src="{{ STATIC_URL }}js/libs/jquery.autocomplete.js"></script>
+  <script src="{{ STATIC_URL }}js/script.js"></script>
   {% endcompress %}
 {% endblock %}
