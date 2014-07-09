@@ -56,11 +56,6 @@ setup(
         'django_compressor'
     ],
     include_package_data=True,
-    package_data={
-        "account": [
-            "locale/*/LC_MESSAGES/*",
-        ],
-    },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
