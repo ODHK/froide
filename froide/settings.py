@@ -5,6 +5,7 @@ importer.install(check_options=True)
 import os
 import sys
 import re
+import django.conf.locale
 
 rec = lambda x: re.compile(x, re.I | re.U)
 
@@ -200,12 +201,12 @@ class Base(Configuration):
     LANGUAGE_CODE = values.Value('en-us')
     LANGUAGES = (
         ('en', gettext('English')),
-    #    ('fi-fi', gettext('Finnish (Finland)')),
-    #    ('de', gettext('German')),
-    #    ('it', gettext('Italian')),
-    #    ('pt', gettext('Portuguese')),
-    #    ('sv-se', gettext('Swedish (Sweden)')),
-    #    ('sv-fi', gettext('Swedish (Finland)')),
+        ('fi-fi', gettext('Finnish (Finland)')),
+        ('de', gettext('German')),
+        ('it', gettext('Italian')),
+        ('pt', gettext('Portuguese')),
+        ('sv-se', gettext('Swedish (Sweden)')),
+        ('sv-fi', gettext('Swedish (Finland)')),
         ('zh-cn', gettext('Chinese (Simplified)')),
         ('zh-hk', gettext('Chinese (Traditional, Hong Kong)')),
     )
@@ -635,6 +636,16 @@ class HerokuSSL(SSLSite, Heroku):
 class HerokuSSLPostmark(SSLSite, HerokuPostmark):
     pass
 
+EXTRA_LANG_INFO = {
+    'zh-hk': {
+        'bidi': False,
+        'code': 'zh-hk',
+        'name': 'Chinese (Traditional, Hong Kong)',
+        'name_local': u'繁體中文(香港)',
+    },
+}
+LANG_INFO = dict(django.conf.locale.LANG_INFO.items() + EXTRA_LANG_INFO.items())
+django.conf.locale.LANG_INFO = LANG_INFO
 
 try:
     from .local_settings import *  # noqa
