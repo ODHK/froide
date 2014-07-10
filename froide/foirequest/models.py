@@ -631,7 +631,8 @@ class FoiRequest(models.Model):
 
     def add_message_from_email(self, email, mail_string=None):
         message = FoiMessage(request=self)
-        message.subject = email['subject'][:250]
+        message.subject = email['subject'] or ''
+        message.subject = message.subject[:250]
         message.is_response = True
         message.sender_name = email['from'][0]
         message.sender_email = email['from'][1]
@@ -1611,6 +1612,7 @@ class DeferredMessage(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     request = models.ForeignKey(FoiRequest, null=True, blank=True)
     mail = models.TextField(blank=True)
+    spam = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('timestamp',)
@@ -1624,6 +1626,9 @@ class DeferredMessage(models.Model):
             'request': self.request
         }
 
+    def decoded_mail(self):
+        return base64.b64decode(self.mail).decode('utf-8')
+
     def redeliver(self, request):
         from .tasks import process_mail
 
@@ -1631,7 +1636,7 @@ class DeferredMessage(models.Model):
         self.save()
         mail = base64.b64decode(self.mail).decode('utf-8')
         mail = mail.replace(self.recipient, self.request.secret_address)
-        process_mail.delay(mail.encode('utf-8'))
+        process_mail.delay(mail.encode('utf-8'), manual=True)
 
 
 # Import Signals here so models are available

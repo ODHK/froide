@@ -14,8 +14,11 @@ from froide.helper.email_utils import (EmailParser, get_unread_mails,
 
 
 unknown_foimail_message = _('''We received an FoI mail to this address: %(address)s.
-No corresponding request could be identified, please investigate!
-%(url)s
+No corresponding request could be identified, please investigate! %(url)s
+''')
+
+spam_message = _('''We received a possible spam mail to this address: %(address)s.
+Please investigate! %(url)s
 ''')
 
 
@@ -48,16 +51,37 @@ def send_foi_mail(subject, message, from_email, recipient_list,
     return email.send()
 
 
-def _process_mail(mail_string, mail_type=None):
+def _process_mail(mail_string, mail_type=None, manual=False):
     parser = EmailParser()
     if mail_type is None:
         email = parser.parse(BytesIO(mail_string))
     elif mail_type == 'postmark':
         email = parser.parse_postmark(json.loads(mail_string.decode('utf-8')))
-    return _deliver_mail(email, mail_string=mail_string)
+    return _deliver_mail(email, mail_string=mail_string, manual=manual)
 
 
-def _deliver_mail(email, mail_string=None):
+def create_deferred(secret_mail, mail_string, b64_encoded=False, spam=False,
+                    subject=_('Unknown FoI-Mail Recipient'), body=unknown_foimail_message):
+    from .models import DeferredMessage
+
+    if mail_string is not None:
+        if not b64_encoded:
+            mail_string = base64.b64encode(mail_string.encode('utf-8')).decode("utf-8")
+    DeferredMessage.objects.create(
+        recipient=secret_mail,
+        mail=mail_string,
+        spam=spam
+    )
+    with override(settings.LANGUAGE_CODE):
+        mail_managers(subject,
+            body % {
+                'address': secret_mail,
+                'url': settings.SITE_URL + reverse('admin:foirequest_deferredmessage_changelist')
+            }
+        )
+
+
+def _deliver_mail(email, mail_string=None, manual=False):
     from .models import FoiRequest, DeferredMessage
 
     received_list = email['to'] + email['cc'] \
@@ -97,21 +121,27 @@ def _deliver_mail(email, mail_string=None):
                 deferred = DeferredMessage.objects.get(recipient=secret_mail, request__isnull=False)
                 foi_request = deferred.request
             except DeferredMessage.DoesNotExist:
-                if mail_string is not None:
-                    if not b64_encoded:
-                        mail_string = base64.b64encode(mail_string.encode('utf-8')).decode("utf-8")
-                DeferredMessage.objects.create(
-                    recipient=secret_mail,
-                    mail=mail_string,
-                )
-                with override(settings.LANGUAGE_CODE):
-                    mail_managers(_('Unknown FoI-Mail Recipient'),
-                        unknown_foimail_message % {
-                            'address': secret_mail,
-                            'url': settings.SITE_URL + reverse('admin:foirequest_deferredmessage_changelist')
-                        }
-                    )
+                create_deferred(secret_mail, mail_string, b64_encoded=b64_encoded, spam=False)
                 continue
+
+        # Check for spam
+        if not manual:
+            messages = foi_request.response_messages()
+            reply_domains = set(m.sender_email.split('@')[1] for m in messages
+                             if m.sender_email and '@' in m.sender_email)
+            reply_domains.add(foi_request.public_body.email.split('@')[1])
+            strip_subdomains = lambda x: '.'.join(x.split('.')[-2:])
+            # Strip subdomains
+            reply_domains = set([strip_subdomains(x) for x in reply_domains])
+
+            sender_email = email['from'][1]
+            if len(messages) > 0 and sender_email and '@' in sender_email:
+                email_domain = strip_subdomains(sender_email.split('@')[1])
+                if email_domain not in reply_domains:
+                    create_deferred(secret_mail, mail_string, b64_encoded=b64_encoded,
+                        spam=True, subject=_('Possible Spam Mail received'), body=spam_message)
+                    continue
+
         foi_request.add_message_from_email(email, mail_string)
 
 
