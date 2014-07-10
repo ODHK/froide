@@ -11,8 +11,18 @@ rec = lambda x: re.compile(x, re.I | re.U)
 
 gettext = lambda s: s
 
-# Django settings for froide project.
+EXTRA_LANG_INFO = {
+    'zh-hk': {
+        'bidi': False,
+        'code': 'zh-hk',
+        'name': 'Chinese (Traditional, Hong Kong)',
+        'name_local': u'繁體中文(香港)',
+    },
+}
+LANG_INFO = dict(django.conf.locale.LANG_INFO.items() + EXTRA_LANG_INFO.items())
+django.conf.locale.LANG_INFO = LANG_INFO
 
+# Django settings for froide project.
 
 class Base(Configuration):
     DEBUG = values.BooleanValue(True)
@@ -635,17 +645,6 @@ class HerokuSSL(SSLSite, Heroku):
 
 class HerokuSSLPostmark(SSLSite, HerokuPostmark):
     pass
-
-EXTRA_LANG_INFO = {
-    'zh-hk': {
-        'bidi': False,
-        'code': 'zh-hk',
-        'name': 'Chinese (Traditional, Hong Kong)',
-        'name_local': u'繁體中文(香港)',
-    },
-}
-LANG_INFO = dict(django.conf.locale.LANG_INFO.items() + EXTRA_LANG_INFO.items())
-django.conf.locale.LANG_INFO = LANG_INFO
 
 try:
     from .local_settings import *  # noqa
