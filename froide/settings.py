@@ -40,6 +40,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
         'django.contrib.admin',
         'django.contrib.comments',
+        'django.contrib.flatpages',
         'django.contrib.sitemaps',
 
         # external
@@ -213,6 +214,7 @@ class Base(Configuration):
         ('en', gettext('English')),
         ('fi-fi', gettext('Finnish (Finland)')),
         ('de', gettext('German')),
+        ('da-dk', gettext('Danish (Denmark)')),
         ('it', gettext('Italian')),
         ('pt', gettext('Portuguese')),
         ('sv-se', gettext('Swedish (Sweden)')),

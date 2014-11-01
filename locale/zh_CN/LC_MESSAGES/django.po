@@ -873,11 +873,11 @@ msgstr "转换为PDF"
 msgid "Has request"
 msgstr "已提出请求"
 
-#: froide/foirequest/admin.py:241
+#: froide/foirequest/admin.py:243
 msgid "Successfully triggered redelivery."
 msgstr "重新传送成功。"
 
-#: froide/foirequest/admin.py:263
+#: froide/foirequest/admin.py:265
 msgid "Redeliver to..."
 msgstr "向......重新发送"
 
@@ -948,15 +948,19 @@ msgid ""
 "%(url)s\n"
 msgstr "我们收到寄到 %(address)s地址的FOI邮件。\n没有可确定的相关请求，请调查！\n%(url)s\n"
 
-#: froide/foirequest/foi_mail.py:108 froide/foirequest/tests/test_mail.py:82
+#: froide/foirequest/foi_mail.py:64 froide/foirequest/tests/test_mail.py:84
 msgid "Unknown FoI-Mail Recipient"
 msgstr "未知FOI邮件接收人"
 
-#: froide/foirequest/foi_mail.py:156
+#: froide/foirequest/foi_mail.py:142
+msgid "Possible Spam Mail received"
+msgstr ""
+
+#: froide/foirequest/foi_mail.py:186
 msgid "publicbody"
 msgstr "公共机构"
 
-#: froide/foirequest/foi_mail.py:158
+#: froide/foirequest/foi_mail.py:188
 msgid "requester"
 msgstr "请求者"
 
@@ -967,7 +971,7 @@ msgstr "搜索主题或公共机构："
 #: froide/foirequest/forms.py:30 froide/foirequest/forms.py:33
 #: froide/foirequest/forms.py:173 froide/foirequest/forms.py:237
 #: froide/foirequest/forms.py:429 froide/foirequest/forms.py:432
-#: froide/foirequest/models.py:1140
+#: froide/foirequest/models.py:1141
 #: froide/foirequest/templates/foirequest/request.html:469
 #: froide/foirequest/templates/foirequest/snippets/message.html:49
 msgid "Subject"
@@ -1083,7 +1087,7 @@ msgid ""
 msgstr "当您被拒绝获得（部分）信息，公共机构应该指明原因。"
 
 #: froide/foirequest/forms.py:282 froide/foirequest/models.py:265
-#: froide/foirequest/models.py:1136
+#: froide/foirequest/models.py:1137
 #: froide/foirequest/templates/foirequest/snippets/message.html:72
 msgid "Status"
 msgstr "状态"
@@ -1412,8 +1416,8 @@ msgstr "描述"
 msgid "Summary"
 msgstr "总结"
 
-#: froide/foirequest/models.py:263 froide/foirequest/models.py:1085
-#: froide/foirequest/models.py:1498
+#: froide/foirequest/models.py:263 froide/foirequest/models.py:1086
+#: froide/foirequest/models.py:1499
 #: froide/foirequest/templates/foirequest/snippets/message.html:39
 #: froide/publicbody/models.py:292
 msgid "Public Body"
@@ -1427,8 +1431,8 @@ msgstr "发表？"
 msgid "Visibility"
 msgstr "可见"
 
-#: froide/foirequest/models.py:276 froide/foirequest/models.py:1088
-#: froide/foirequest/models.py:1495 froide/foirequestfollower/models.py:56
+#: froide/foirequest/models.py:276 froide/foirequest/models.py:1089
+#: froide/foirequest/models.py:1496 froide/foirequestfollower/models.py:56
 #: froide/frontpage/models.py:30
 msgid "User"
 msgstr "用户"
@@ -1492,8 +1496,8 @@ msgstr "管辖权"
 msgid "Site"
 msgstr "网址"
 
-#: froide/foirequest/models.py:320 froide/foirequest/models.py:1083
-#: froide/foirequest/models.py:1104 froide/foirequest/models.py:1492
+#: froide/foirequest/models.py:320 froide/foirequest/models.py:1084
+#: froide/foirequest/models.py:1105 froide/foirequest/models.py:1493
 #: froide/foirequestfollower/models.py:55
 msgid "Freedom of Information Request"
 msgstr "信息自由请求"
@@ -1511,8 +1515,8 @@ msgstr "可以看到私人请求"
 msgid "Request '%s'"
 msgstr "请求  '%s'"
 
-#: froide/foirequest/models.py:425 froide/foirequest/models.py:1280
-#: froide/foirequest/models.py:1295 froide/foirequest/models.py:1319
+#: froide/foirequest/models.py:425 froide/foirequest/models.py:1281
+#: froide/foirequest/models.py:1296 froide/foirequest/models.py:1320
 msgid "<<email address>>"
 msgstr "<<邮件地址>>"
 
@@ -1543,346 +1547,346 @@ msgstr "尊敬的先生或女士，\n\n......\n谨启\n%(name)s\n"
 msgid "Complaint about request \"%(title)s\""
 msgstr "关于\"%(title)s\"请求的投诉"
 
-#: froide/foirequest/models.py:662
+#: froide/foirequest/models.py:663
 #, python-format
 msgid "attached_file_%d"
 msgstr "附件%d"
 
 #. Translators: replacement for person name in filename
-#: froide/foirequest/models.py:668
+#: froide/foirequest/models.py:669
 msgid "NAME"
 msgstr "姓名"
 
-#: froide/foirequest/models.py:681
+#: froide/foirequest/models.py:682
 msgid "Message contains PDF"
 msgstr "信息包括PDF"
 
-#: froide/foirequest/models.py:725
+#: froide/foirequest/models.py:726
 #, python-format
 msgid "request_%(num)s.zip"
 msgstr "%(num)s请求.zip"
 
-#: froide/foirequest/models.py:771 froide/foirequest/models.py:775
+#: froide/foirequest/models.py:772 froide/foirequest/models.py:776
 msgid "Unknown"
 msgstr "不明"
 
-#: froide/foirequest/models.py:1020
+#: froide/foirequest/models.py:1021
 #, python-format
 msgid "%(site_name)s: Please classify the reply to your request"
 msgstr "%(site_name)s：请对请求的回复分类"
 
-#: froide/foirequest/models.py:1040
+#: froide/foirequest/models.py:1041
 #, python-format
 msgid "%(site_name)s: Update on one of your request"
 msgid_plural "%(site_name)s: Update on %(count)s of your requests"
 msgstr[0] "%(site_name)s: 更新%(count)s您的请求"
 
-#: froide/foirequest/models.py:1089
+#: froide/foirequest/models.py:1090
 msgid "Timestamp of Suggestion"
 msgstr "建议的时间标示"
 
-#: froide/foirequest/models.py:1091
+#: froide/foirequest/models.py:1092
 msgid "Reason this Public Body fits the request"
 msgstr "该公共机构符合请求的原因"
 
-#: froide/foirequest/models.py:1097
+#: froide/foirequest/models.py:1098
 msgid "Public Body Suggestion"
 msgstr "公共机构建议"
 
-#: froide/foirequest/models.py:1098
+#: froide/foirequest/models.py:1099
 msgid "Public Body Suggestions"
 msgstr "公共机构建议"
 
-#: froide/foirequest/models.py:1105
+#: froide/foirequest/models.py:1106
 msgid "has message been sent?"
 msgstr "信息已经发送？"
 
-#: froide/foirequest/models.py:1106
+#: froide/foirequest/models.py:1107
 msgid "Is this message a response?"
 msgstr "这是回复信息么？"
 
-#: froide/foirequest/models.py:1108
+#: froide/foirequest/models.py:1109
 msgid "Postal?"
 msgstr "邮寄？"
 
-#: froide/foirequest/models.py:1110
+#: froide/foirequest/models.py:1111
 msgid "Escalation?"
 msgstr "升级？"
 
-#: froide/foirequest/models.py:1112
+#: froide/foirequest/models.py:1113
 msgid "Content hidden?"
 msgstr "隐藏内容？"
 
-#: froide/foirequest/models.py:1119
+#: froide/foirequest/models.py:1120
 msgid "From User"
 msgstr "来自用户"
 
-#: froide/foirequest/models.py:1121
+#: froide/foirequest/models.py:1122
 msgid "From Email"
 msgstr "来自邮件"
 
-#: froide/foirequest/models.py:1123
+#: froide/foirequest/models.py:1124
 msgid "From Name"
 msgstr "来自姓名"
 
-#: froide/foirequest/models.py:1127
+#: froide/foirequest/models.py:1128
 msgid "From Public Body"
 msgstr "来自公共机构"
 
-#: froide/foirequest/models.py:1129
+#: froide/foirequest/models.py:1130
 msgid "Recipient"
 msgstr "收件人"
 
-#: froide/foirequest/models.py:1131
+#: froide/foirequest/models.py:1132
 msgid "Recipient Email"
 msgstr "收件人邮箱地址"
 
-#: froide/foirequest/models.py:1135
+#: froide/foirequest/models.py:1136
 msgid "Public Body Recipient"
 msgstr "公共机构收件人"
 
-#: froide/foirequest/models.py:1139 froide/foirequest/models.py:1501
+#: froide/foirequest/models.py:1140 froide/foirequest/models.py:1502
 #: froide/frontpage/models.py:22
 msgid "Timestamp"
 msgstr "时间标示"
 
-#: froide/foirequest/models.py:1141
+#: froide/foirequest/models.py:1142
 msgid "Redacted Subject"
 msgstr "编辑主题"
 
-#: froide/foirequest/models.py:1142
+#: froide/foirequest/models.py:1143
 msgid "plain text"
 msgstr "纯文本"
 
-#: froide/foirequest/models.py:1143
+#: froide/foirequest/models.py:1144
 msgid "redacted plain text"
 msgstr "编辑纯文本"
 
-#: froide/foirequest/models.py:1144
+#: froide/foirequest/models.py:1145
 msgid "HTML"
 msgstr "HTML"
 
-#: froide/foirequest/models.py:1145
+#: froide/foirequest/models.py:1146
 msgid "Original"
 msgstr "原本的"
 
-#: froide/foirequest/models.py:1146
+#: froide/foirequest/models.py:1147
 msgid "Was Redacted?"
 msgstr "编辑？"
 
-#: froide/foirequest/models.py:1147
+#: froide/foirequest/models.py:1148
 msgid "Not publishable"
 msgstr "不能发布"
 
-#: froide/foirequest/models.py:1153
+#: froide/foirequest/models.py:1154
 msgid "Freedom of Information Message"
 msgstr "公开资料信息"
 
-#: froide/foirequest/models.py:1154
+#: froide/foirequest/models.py:1155
 msgid "Freedom of Information Messages"
 msgstr "公开资料信息"
 
-#: froide/foirequest/models.py:1161
+#: froide/foirequest/models.py:1162
 #, python-format
 msgid "Message in '%(request)s' at %(time)s"
 msgstr "'%(request)s' 中于 %(time)s的信息"
 
-#: froide/foirequest/models.py:1170
+#: froide/foirequest/models.py:1171
 #, python-format
 msgid "message-%(id)d"
 msgstr "message-%(id)d"
 
-#: froide/foirequest/models.py:1279 froide/foirequest/models.py:1294
+#: froide/foirequest/models.py:1280 froide/foirequest/models.py:1295
 msgid "<<name and email address>>"
 msgstr "《姓名和邮箱地址》"
 
-#: froide/foirequest/models.py:1297
+#: froide/foirequest/models.py:1298
 msgid "<< Greeting >>"
 msgstr "《您好》"
 
-#: froide/foirequest/models.py:1356
+#: froide/foirequest/models.py:1357
 msgid "Belongs to request"
 msgstr "属于请求"
 
-#: froide/foirequest/models.py:1357 froide/foisite/models.py:12
+#: froide/foirequest/models.py:1358 froide/foisite/models.py:12
 #: froide/publicbody/models.py:38 froide/publicbody/models.py:63
 #: froide/publicbody/models.py:238
 msgid "Name"
 msgstr "姓名"
 
-#: froide/foirequest/models.py:1358
+#: froide/foirequest/models.py:1359
 msgid "File"
 msgstr "文件"
 
-#: froide/foirequest/models.py:1359
+#: froide/foirequest/models.py:1360
 msgid "Size"
 msgstr "尺寸"
 
-#: froide/foirequest/models.py:1360
+#: froide/foirequest/models.py:1361
 msgid "File type"
 msgstr "文件类型"
 
-#: froide/foirequest/models.py:1361
+#: froide/foirequest/models.py:1362
 msgid "Format"
 msgstr "格式"
 
-#: froide/foirequest/models.py:1362
+#: froide/foirequest/models.py:1363
 msgid "User can approve"
 msgstr "用户可以批准"
 
-#: froide/foirequest/models.py:1363
+#: froide/foirequest/models.py:1364
 msgid "Approved"
 msgstr "获批准的"
 
-#: froide/foirequest/models.py:1364
+#: froide/foirequest/models.py:1365
 msgid "Redacted Version"
 msgstr "编辑版本"
 
-#: froide/foirequest/models.py:1367
+#: froide/foirequest/models.py:1368
 msgid "Is redacted"
 msgstr "被编辑的"
 
-#: froide/foirequest/models.py:1368
+#: froide/foirequest/models.py:1369
 msgid "Converted Version"
 msgstr "转换的版本"
 
-#: froide/foirequest/models.py:1371
+#: froide/foirequest/models.py:1372
 msgid "Is converted"
 msgstr "被转换"
 
-#: froide/foirequest/models.py:1408
+#: froide/foirequest/models.py:1409
 msgid "Attachment"
 msgstr "附件"
 
-#: froide/foirequest/models.py:1409
+#: froide/foirequest/models.py:1410
 #: froide/foirequest/templates/foirequest/list_unchecked.html:22
 #: froide/foirequest/templates/foirequest/snippets/message.html:86
 msgid "Attachments"
 msgstr "附件"
 
-#: froide/foirequest/models.py:1426
+#: froide/foirequest/models.py:1427
 #, python-format
 msgid "attachment-%(id)d"
 msgstr "attachment-%(id)d"
 
-#: froide/foirequest/models.py:1472
+#: froide/foirequest/models.py:1473
 msgid "See FoiMessage"
 msgstr "查看FOI 信息"
 
-#: froide/foirequest/models.py:1499
+#: froide/foirequest/models.py:1500
 msgid "Is Public?"
 msgstr "是公开的？"
 
-#: froide/foirequest/models.py:1500
+#: froide/foirequest/models.py:1501
 msgid "Event Name"
 msgstr "事件名称"
 
-#: froide/foirequest/models.py:1502
+#: froide/foirequest/models.py:1503
 msgid "Context JSON"
 msgstr "JSON内容"
 
-#: froide/foirequest/models.py:1508
+#: froide/foirequest/models.py:1509
 #, python-format
 msgid "%(user)s suggested %(public_body)s for the request '%(request)s'"
 msgstr "针对'%(request)s'请求，%(user)s 建议向 %(public_body)s提出申请"
 
-#: froide/foirequest/models.py:1510
+#: froide/foirequest/models.py:1511
 #, python-format
 msgid "%(user)s reported costs of %(amount)s for this request."
 msgstr "%(user)s 发布了该请求的成本为%(amount)s"
 
-#: froide/foirequest/models.py:1512
+#: froide/foirequest/models.py:1513
 #, python-format
 msgid "Received an email from %(public_body)s."
 msgstr "收到 %(public_body)s的邮件。"
 
-#: froide/foirequest/models.py:1514
+#: froide/foirequest/models.py:1515
 #, python-format
 msgid "%(user)s sent a message to %(public_body)s."
 msgstr "%(user)s向%(public_body)s发送了一条信息。"
 
-#: froide/foirequest/models.py:1516
+#: froide/foirequest/models.py:1517
 #, python-format
 msgid "%(user)s published an attachment on request %(request)s."
 msgstr "%(user)s 在%(request)s请求上发布了附件。"
 
-#: froide/foirequest/models.py:1518
+#: froide/foirequest/models.py:1519
 #, python-format
 msgid "Request was redirected to %(public_body)s and due date has been reset."
 msgstr "请求已被重新定向到%(public_body)s，并且截止日期已经重置。"
 
-#: froide/foirequest/models.py:1520
+#: froide/foirequest/models.py:1521
 #, python-format
 msgid "%(user)s set status to '%(status)s'."
 msgstr "%(user)s设置状态为'%(status)s'。"
 
-#: froide/foirequest/models.py:1522
+#: froide/foirequest/models.py:1523
 #, python-format
 msgid "%(user)s made the request '%(request)s' public."
 msgstr "%(user)s 将请求'%(request)s'公开。"
 
-#: froide/foirequest/models.py:1524
+#: froide/foirequest/models.py:1525
 #, python-format
 msgid ""
 "%(public_body)s refused to provide information on the grounds of %(reason)s."
 msgstr "由于%(reason)s原因，%(public_body)s 拒绝提供信息。"
 
-#: froide/foirequest/models.py:1526
+#: froide/foirequest/models.py:1527
 #, python-format
 msgid ""
 "%(public_body)s answered partially, but denied access to all information on "
 "the grounds of %(reason)s."
 msgstr "由于%(reason)s原因，%(public_body)s做了部分回复，但是拒绝提供所有信息。"
 
-#: froide/foirequest/models.py:1528
+#: froide/foirequest/models.py:1529
 msgid "This request became overdue"
 msgstr "该请求已过期"
 
-#: froide/foirequest/models.py:1530
+#: froide/foirequest/models.py:1531
 #, python-format
 msgid ""
 "%(user)s set '%(name)s' as the information law for the request %(request)s."
 msgstr "%(user)s设置 '%(name)s'为 %(request)s请求的信息法。"
 
-#: froide/foirequest/models.py:1532
+#: froide/foirequest/models.py:1533
 #, python-format
 msgid "%(user)s added a reply that was received via snail mail."
 msgstr ""
 
-#: froide/foirequest/models.py:1534
+#: froide/foirequest/models.py:1535
 #, python-format
 msgid ""
 "%(user)s filed a complaint to the %(public_body)s about the handling of this"
 " request %(request)s."
 msgstr "针对%(request)s请求的处理，%(user)s向%(public_body)s提出申诉。"
 
-#: froide/foirequest/models.py:1536
+#: froide/foirequest/models.py:1537
 #, python-format
 msgid "The deadline of request %(request)s has been extended."
 msgstr "%(request)s请求的截止日期已经延期。"
 
-#: froide/foirequest/models.py:1541
+#: froide/foirequest/models.py:1542
 msgid "Request Event"
 msgstr "请求事件"
 
-#: froide/foirequest/models.py:1542
+#: froide/foirequest/models.py:1543
 msgid "Request Events"
 msgstr "请求事件"
 
 #. Translators: Hash part of Event URL
-#: froide/foirequest/models.py:1555
+#: froide/foirequest/models.py:1556
 msgid "event"
 msgstr "事件"
 
-#: froide/foirequest/models.py:1618
+#: froide/foirequest/models.py:1620
 msgid "Undelivered Message"
 msgstr "未发送的信息"
 
-#: froide/foirequest/models.py:1619
+#: froide/foirequest/models.py:1621
 msgid "Undelivered Messages"
 msgstr "未发送的信息"
 
-#: froide/foirequest/models.py:1622
+#: froide/foirequest/models.py:1624
 #, python-format
 msgid "Undelievered Message to %(recipient)s (%(request)s)"
 msgstr "未发送到%(recipient)s (%(request)s)的信息"
@@ -3735,7 +3739,7 @@ msgid ""
 msgstr "看起来您正从 %(country_name)s访问。你是否清楚有一个<a href=\"%(url)s\">关于%(country_name)s名叫%(name)s的FOI网站</a>？"
 
 #: froide/frontpage/models.py:20 froide/frontpage/models.py:40
-#: froide/templates/index.html:47
+#: froide/templates/index.html:52
 msgid "Featured Request"
 msgstr "精选请求"
 
@@ -4005,7 +4009,7 @@ msgid "Environment"
 msgstr "环境"
 
 #: froide/publicbody/templates/publicbody/_chooser.html:37
-#: froide/templates/index.html:36
+#: froide/templates/index.html:39
 msgid "or"
 msgstr "或者"
 
@@ -4285,42 +4289,42 @@ msgstr "使用条款"
 msgid "Privacy Statement"
 msgstr "隐私声明"
 
-#: froide/templates/index.html:15
+#: froide/templates/index.html:18
 msgid ""
 "This site publishes Freedom of Information requests and helps you to make "
 "your own!"
 msgstr "该网站发布信息自由的请求，以帮助您提出自己所需的申请！"
 
-#: froide/templates/index.html:21
+#: froide/templates/index.html:24
 #, python-format
 msgid "Search %(foicount)s requests and %(pbcount)s public bodies:"
 msgstr "搜索 %(foicount)s 请求和%(pbcount)s公共机构："
 
-#: froide/templates/index.html:28 froide/templates/search/search.html:17
+#: froide/templates/index.html:31 froide/templates/search/search.html:17
 msgid "Search For Information"
 msgstr "搜索信息"
 
-#: froide/templates/index.html:34
+#: froide/templates/index.html:37
 msgid "Try the following:"
 msgstr "尝试以下内容："
 
-#: froide/templates/index.html:35
+#: froide/templates/index.html:38
 msgid "Nuclear"
 msgstr "核"
 
-#: froide/templates/index.html:37
+#: froide/templates/index.html:40
 msgid "Employment"
 msgstr "就业"
 
-#: froide/templates/index.html:57
+#: froide/templates/index.html:62
 msgid "Read the blog post"
 msgstr "阅读博客公告"
 
-#: froide/templates/index.html:65
+#: froide/templates/index.html:70
 msgid "Visit this request"
 msgstr "访问请求"
 
-#: froide/templates/index.html:71
+#: froide/templates/index.html:76
 msgid ""
 "Freedom of Information Request\n"
 "\n"
@@ -4331,45 +4335,45 @@ msgid ""
 "    ..."
 msgstr "信息自由请求\n\n致：内政部\n\n尊敬的先生或女士，\n我提出关于以下内容的请求：\n......"
 
-#: froide/templates/index.html:78
+#: froide/templates/index.html:83
 msgid "Write a Request Now!"
 msgstr "现在写一个请求！"
 
-#: froide/templates/index.html:90
+#: froide/templates/index.html:98
 msgid "What is Freedom of Information?"
 msgstr "什么是信息自由？"
 
-#: froide/templates/index.html:91
+#: froide/templates/index.html:99
 msgid ""
 "Every citizen has the right under the Freedom of Information Laws to ask for"
 " and receive access to information from Public Bodies concerning public "
 "affairs."
 msgstr "按信息自由法规定，每个公民都有权利申请并获得关于公共事务的公共机构的信息。"
 
-#: froide/templates/index.html:93
+#: froide/templates/index.html:101
 msgid "Read more about the Freedom of Information!"
 msgstr "了解更多关于信息自由的资讯！"
 
-#: froide/templates/index.html:100
+#: froide/templates/index.html:108
 msgid "What does this site do?"
 msgstr "这个网站做什么？"
 
-#: froide/templates/index.html:101
+#: froide/templates/index.html:109
 msgid ""
 "This site publishes Freedom of Information requests and replies so that "
 "others don't have to ask for the same information and replies can be "
 "scrutinized by the public."
 msgstr "该网站发布信息自由的申请和回复，其他市民无需再询问相同的信息并且回复也可供公众查询。"
 
-#: froide/templates/index.html:103
+#: froide/templates/index.html:111
 msgid "Read more about the concept!"
 msgstr "阅读更多关于这个概念的内容！"
 
-#: froide/templates/index.html:114
+#: froide/templates/index.html:122
 msgid "Successful Requests"
 msgstr "成功的请求"
 
-#: froide/templates/index.html:126
+#: froide/templates/index.html:134
 msgid "Unsuccessful Requests"
 msgstr "不成功的请求"
 

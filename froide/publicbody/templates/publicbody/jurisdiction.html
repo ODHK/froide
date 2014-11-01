@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
+{% load flatpages %}
 
 {% block title %}{{ object.name }} - {{ SITE_NAME }}{% endblock %}
 
 {% block body %}
 {% block header %}
+</div>
 <div class="state-header" style="background-image: url('{{ STATIC_URL }}img/jurisdictions/{{ object.slug }}_panorama.jpg')">
+  <div class="container">
   <div class="row">
     <div class="col-lg-12 state-headline {% block header_headline_extraclass %}{% endblock %}">
       <h1>
@@ -72,12 +75,23 @@
     </div>
   </div>
 </div>
+</div>
+<div class="container">
 {% endblock %}
 
 {% block jurisdiction_body %}
 <div class="row">
   <div class="col-lg-offset-1 col-lg-7 col-md-7 col-md-offset-1">
     {% block jurisdiction_text %}
+      {% with page_url="/"|add:object.slug|add:"/text/" %}
+        {% get_flatpages page_url as content_page %}
+        {% if content_page %}
+          <h3>
+            {{ content_page.0.title }}
+          </h3>
+          {{ content_page.0.content|safe }}
+        {% endif %}
+      {% endwith %}
     {% endblock %}
   </div>
 
