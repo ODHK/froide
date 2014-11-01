@@ -3,23 +3,43 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Translators:
 # caxekis <caxekis@gmail.com>, 2014
-# vitaminF <fredawan@gmail.com>, 2014
-# Phoeberocks <phoebeqp@gmail.com>, 2014
 # Dancy <yaxuanzh@gmail.com>, 2014
+# Mart van de Ven <m@type.hk>, 2014
+# slygent <opengovhk@gfrm.in>, 2014
+# Phoeberocks <phoebeqp@gmail.com>, 2014
+# Mart van de Ven <m@type.hk>, 2014
+# vitaminF <fredawan@gmail.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: opengov.hk\n"
+"Project-Id-Version: froide\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-10 10:23+0200\n"
-"PO-Revision-Date: 2014-05-25 10:12+0000\n"
-"Last-Translator: Dancy <yaxuanzh@gmail.com>\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/projects/p/opengovhk/language/zh_CN/)\n"
+"POT-Creation-Date: 2014-08-06 16:43+0200\n"
+"PO-Revision-Date: 2014-11-01 09:23+0000\n"
+"Last-Translator: slygent <opengovhk@gfrm.in>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/projects/p/froide/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: docs/_build/html/theming.html:97
+msgid ""
+"Froide is a free and Open Source Project by &lt;a "
+"href=\"http://www.okfn.org\"&gt;the Open Knowledge Foundation&lt;/a&gt;."
+msgstr ""
+
+#: docs/_build/html/_sources/theming.txt:53
+msgid ""
+"Froide is a free and Open Source Project by <a "
+"href=\"http://www.okfn.org\">the Open Knowledge Foundation</a>."
+msgstr ""
+
+#: froide/_local_settings.py:11 froide/settings.py:204 froide/settings.py:492
+msgid "German"
+msgstr "德文"
 
 #. Translators: URL part of /help/
 #: froide/help_urls.py:28
@@ -57,15 +77,39 @@ msgstr "donate"
 
 #: froide/settings.py:202
 msgid "English"
-msgstr "English - 英文"
+msgstr "英文"
 
 #: froide/settings.py:203
+msgid "Finnish (Finland)"
+msgstr "芬兰语 (芬兰)"
+
+#: froide/settings.py:205
+msgid "Danish (Denmark)"
+msgstr "丹麦语 (丹麦)"
+
+#: froide/settings.py:206
+msgid "Italian"
+msgstr "意大利语"
+
+#: froide/settings.py:207
+msgid "Portuguese"
+msgstr "葡萄牙语"
+
+#: froide/settings.py:208
+msgid "Swedish (Sweden)"
+msgstr "瑞典语 (瑞典)"
+
+#: froide/settings.py:209
+msgid "Swedish (Finland)"
+msgstr "瑞典语 (芬兰)"
+
+#: froide/settings.py:210
+msgid "Chinese (Simplified)"
+msgstr "中文(简体)"
+
+#: froide/settings.py:211
 msgid "Chinese (Traditional, Hong Kong)"
 msgstr "中文（繁体，香港）"
-
-#: froide/settings.py:480
-msgid "German"
-msgstr "Deutsch - 德文"
 
 #. Translators: request URL
 #: froide/urls.py:81
@@ -149,7 +193,7 @@ msgstr "姓"
 msgid "Last Name"
 msgstr "姓"
 
-#: froide/account/forms.py:33 froide/account/forms.py:156
+#: froide/account/forms.py:33 froide/account/forms.py:157
 msgid "Mailing Address"
 msgstr "邮寄地址"
 
@@ -159,12 +203,12 @@ msgid ""
 "case a public body needs to send you paper."
 msgstr "可选。您的地址不会公开并且仅用于公共机构向您寄送材料。"
 
-#: froide/account/forms.py:38 froide/account/forms.py:158
+#: froide/account/forms.py:38 froide/account/forms.py:159
 msgid "Street, Post Code, City"
 msgstr "街道，邮编，城市"
 
-#: froide/account/forms.py:40 froide/account/forms.py:137
-#: froide/account/forms.py:151
+#: froide/account/forms.py:40 froide/account/forms.py:138
+#: froide/account/forms.py:152
 msgid "Email address"
 msgstr "邮箱地址"
 
@@ -172,8 +216,8 @@ msgstr "邮箱地址"
 msgid "Not public. The given address will need to be confirmed."
 msgstr "非公开。地址需要确认。"
 
-#: froide/account/forms.py:45 froide/account/forms.py:134
-#: froide/account/forms.py:148 froide/account/forms.py:173
+#: froide/account/forms.py:45 froide/account/forms.py:135
+#: froide/account/forms.py:149 froide/account/forms.py:174
 msgid "mail@ddress.net"
 msgstr "mail@ddress.net"
 
@@ -217,15 +261,15 @@ msgid ""
 "click on the confirmation link in the mail we send you."
 msgstr "这个邮箱地址已经注册，但还没有确认！请点击我们发送给您的邮件中的确认链接。"
 
-#: froide/account/forms.py:97
+#: froide/account/forms.py:98
 msgid "Terms and Conditions and Privacy Statement"
 msgstr "使用条款及隐私声明"
 
-#: froide/account/forms.py:99
+#: froide/account/forms.py:100
 msgid "You need to accept our Terms and Conditions and Priavcy Statement."
 msgstr "您需要接受我们的使用条款及隐私声明。"
 
-#: froide/account/forms.py:101
+#: froide/account/forms.py:102
 #, python-format
 msgid ""
 "You agree to our <a href=\"%(url_terms)s\" class=\"target-new\">Terms and "
@@ -233,64 +277,64 @@ msgid ""
 "Statement</a>"
 msgstr "您同意我们的<a href=\"%(url_terms)s\" class=\"target-new\">使用条款</a> 和 <a href=\"%(url_privacy)s\" class=\"target-new\">隐私声明</a>"
 
-#: froide/account/forms.py:105
+#: froide/account/forms.py:106
 msgid "Check if you want to receive our newsletter."
 msgstr "如果你想接受我们的简报，勾选这个。"
 
-#: froide/account/forms.py:120 froide/account/forms.py:142
-#: froide/account/forms.py:224
+#: froide/account/forms.py:121 froide/account/forms.py:143
+#: froide/account/forms.py:225
 msgid "Password"
 msgstr "密码"
 
-#: froide/account/forms.py:122
+#: froide/account/forms.py:123
 msgid "Password (repeat)"
 msgstr "密码（重复输入）"
 
-#: froide/account/forms.py:127
+#: froide/account/forms.py:128
 msgid "Passwords do not match!"
 msgstr "密码不匹配！"
 
-#: froide/account/forms.py:157
+#: froide/account/forms.py:158
 msgid "Your address will never be displayed publicly."
 msgstr "您的地址不会公开。"
 
-#: froide/account/forms.py:174
+#: froide/account/forms.py:175
 msgid "New email address"
 msgstr "新邮箱地址"
 
-#: froide/account/forms.py:180
+#: froide/account/forms.py:181
 msgid "A user with that email address already exists!"
 msgstr "已有用户用此邮箱注册！"
 
-#: froide/account/forms.py:199
+#: froide/account/forms.py:200
 msgid "Logged in user does not match this link!"
 msgstr "已登陆的用户不适用该链接！"
 
-#: froide/account/forms.py:210
+#: froide/account/forms.py:211
 msgid "Link is invalid or has expired!"
 msgstr "链接无效或已过期！"
 
-#: froide/account/forms.py:220
+#: froide/account/forms.py:221
 msgid "Freedom of Information Act"
 msgstr "资讯自由法"
 
-#: froide/account/forms.py:225
+#: froide/account/forms.py:226
 msgid "Please type your password to confirm."
 msgstr "请输入密码确认。"
 
-#: froide/account/forms.py:231
+#: froide/account/forms.py:232
 msgid "Confirmation Phrase"
 msgstr "确认码"
 
-#: froide/account/forms.py:232
+#: froide/account/forms.py:233
 msgid "Type the phrase above exactly as displayed."
 msgstr "请输入以上文字。"
 
-#: froide/account/forms.py:246
+#: froide/account/forms.py:247
 msgid "You provided the wrong password!"
 msgstr "您输入的密码错误！"
 
-#: froide/account/forms.py:254
+#: froide/account/forms.py:255
 msgid "You did not type the confirmation phrase exactly right!"
 msgstr "您输入的确认码不正确！"
 
@@ -302,7 +346,7 @@ msgstr "机构网址"
 msgid "Private"
 msgstr "隐私"
 
-#: froide/account/models.py:29 froide/publicbody/models.py:258
+#: froide/account/models.py:29 froide/publicbody/models.py:257
 msgid "Address"
 msgstr "地址"
 
@@ -470,7 +514,11 @@ msgstr "密码错误。账户删除失败。"
 msgid "Your account has been deleted and you have been logged out."
 msgstr "您的账户已经删除，您已经登出。"
 
-#: froide/account/views.py:386
+#: froide/account/views.py:384
+msgid "Thank you for accepting our new terms!"
+msgstr ""
+
+#: froide/account/views.py:388
 msgid "You need to accept our new terms to continue."
 msgstr "您需要接受我们的新条款以继续。"
 
@@ -944,9 +992,15 @@ msgstr "'%(title)s' 致 %(publicbody)s"
 #, python-format
 msgid ""
 "We received an FoI mail to this address: %(address)s.\n"
-"No corresponding request could be identified, please investigate!\n"
-"%(url)s\n"
-msgstr "我们收到寄到 %(address)s地址的FOI邮件。\n没有可确定的相关请求，请调查！\n%(url)s\n"
+"No corresponding request could be identified, please investigate! %(url)s\n"
+msgstr ""
+
+#: froide/foirequest/foi_mail.py:20
+#, python-format
+msgid ""
+"We received a possible spam mail to this address: %(address)s.\n"
+"Please investigate! %(url)s\n"
+msgstr ""
 
 #: froide/foirequest/foi_mail.py:64 froide/foirequest/tests/test_mail.py:84
 msgid "Unknown FoI-Mail Recipient"
@@ -1042,7 +1096,7 @@ msgstr "%(publicbody)s 的默认地址"
 
 #: froide/foirequest/forms.py:192
 msgid "Send physical address"
-msgstr ""
+msgstr "发送物理地址"
 
 #: froide/foirequest/forms.py:193
 msgid ""
@@ -1062,7 +1116,7 @@ msgstr "原因"
 msgid "Suggestions"
 msgstr "建议"
 
-#: froide/foirequest/forms.py:263 froide/publicbody/models.py:335
+#: froide/foirequest/forms.py:263 froide/publicbody/models.py:334
 msgid "More Info"
 msgstr "更多信息"
 
@@ -1403,12 +1457,12 @@ msgid "Visible to Requester"
 msgstr "可见请求者"
 
 #: froide/foirequest/models.py:258 froide/publicbody/models.py:39
-#: froide/publicbody/models.py:64 froide/publicbody/models.py:241
+#: froide/publicbody/models.py:64 froide/publicbody/models.py:240
 msgid "Slug"
 msgstr ""
 
 #: froide/foirequest/models.py:259 froide/publicbody/models.py:40
-#: froide/publicbody/models.py:65 froide/publicbody/models.py:242
+#: froide/publicbody/models.py:65 froide/publicbody/models.py:241
 msgid "Description"
 msgstr "描述"
 
@@ -1419,7 +1473,7 @@ msgstr "总结"
 #: froide/foirequest/models.py:263 froide/foirequest/models.py:1086
 #: froide/foirequest/models.py:1499
 #: froide/foirequest/templates/foirequest/snippets/message.html:39
-#: froide/publicbody/models.py:292
+#: froide/publicbody/models.py:291
 msgid "Public Body"
 msgstr "公共机构"
 
@@ -1486,13 +1540,13 @@ msgid "is FoI request"
 msgstr "是FOI请求"
 
 #: froide/foirequest/models.py:305 froide/publicbody/models.py:47
-#: froide/publicbody/models.py:74 froide/publicbody/models.py:279
+#: froide/publicbody/models.py:74 froide/publicbody/models.py:278
 #: froide/publicbody/templates/publicbody/show.html:26
 msgid "Jurisdiction"
 msgstr "管辖权"
 
 #: froide/foirequest/models.py:309 froide/frontpage/models.py:33
-#: froide/publicbody/models.py:94 froide/publicbody/models.py:276
+#: froide/publicbody/models.py:94 froide/publicbody/models.py:275
 msgid "Site"
 msgstr "网址"
 
@@ -3710,7 +3764,7 @@ msgid "Country Name"
 msgstr "国家名称"
 
 #: froide/foisite/models.py:13 froide/frontpage/models.py:25
-#: froide/publicbody/models.py:77 froide/publicbody/models.py:243
+#: froide/publicbody/models.py:77 froide/publicbody/models.py:242
 msgid "URL"
 msgstr "网址"
 
@@ -3816,7 +3870,7 @@ msgstr "创建日期"
 msgid "Updated Date"
 msgstr "更新日期"
 
-#: froide/publicbody/models.py:69 froide/publicbody/models.py:260
+#: froide/publicbody/models.py:69 froide/publicbody/models.py:259
 msgid "request note"
 msgstr "请求的附注"
 
@@ -3872,7 +3926,7 @@ msgstr "中介人"
 msgid "E-Mail only"
 msgstr "仅邮箱"
 
-#: froide/publicbody/models.py:100 froide/publicbody/models.py:283
+#: froide/publicbody/models.py:100 froide/publicbody/models.py:282
 msgid "Freedom of Information Laws"
 msgstr "信息自由法"
 
@@ -3905,58 +3959,54 @@ msgid "Tagged Public Bodies"
 msgstr "已标签的公共机构"
 
 #: froide/publicbody/models.py:239
-msgid "Name (Chinese)"
-msgstr "姓名（中文）"
-
-#: froide/publicbody/models.py:240
 msgid "Other names"
 msgstr "其他名字"
 
-#: froide/publicbody/models.py:251
+#: froide/publicbody/models.py:250
 msgid "Classification"
 msgstr "分类"
 
-#: froide/publicbody/models.py:253
+#: froide/publicbody/models.py:252
 msgid "Classification Slug"
 msgstr ""
 
-#: froide/publicbody/models.py:256
+#: froide/publicbody/models.py:255
 msgid "Email"
 msgstr "邮箱"
 
-#: froide/publicbody/models.py:257
+#: froide/publicbody/models.py:256
 msgid "Contact"
 msgstr "联系"
 
-#: froide/publicbody/models.py:259
+#: froide/publicbody/models.py:258
 msgid "Website Dump"
 msgstr "网站快照"
 
-#: froide/publicbody/models.py:263
+#: froide/publicbody/models.py:262
 msgid "Created by"
 msgstr "由......创建"
 
-#: froide/publicbody/models.py:267
+#: froide/publicbody/models.py:266
 msgid "Updated by"
 msgstr "由......更新"
 
-#: froide/publicbody/models.py:270
+#: froide/publicbody/models.py:269
 msgid "Created at"
 msgstr "创建于"
 
-#: froide/publicbody/models.py:271
+#: froide/publicbody/models.py:270
 msgid "Updated at"
 msgstr "更新于"
 
-#: froide/publicbody/models.py:272
+#: froide/publicbody/models.py:271
 msgid "confirmed"
 msgstr "确认的"
 
-#: froide/publicbody/models.py:274
+#: froide/publicbody/models.py:273
 msgid "Number of requests"
 msgstr "请求的数量"
 
-#: froide/publicbody/models.py:293
+#: froide/publicbody/models.py:292
 #: froide/publicbody/templates/publicbody/base.html:5
 #: froide/publicbody/templates/publicbody/list.html:10
 #: froide/templates/base.html:36
@@ -4264,7 +4314,7 @@ msgstr "登出"
 msgid "Log In /<br/>Sign up"
 msgstr "登陆 /<br/>注册"
 
-#: froide/templates/base.html:138
+#: froide/templates/base.html:141
 #, python-format
 msgid ""
 "Froide is a free and Open Source Project by <a "
@@ -4273,19 +4323,19 @@ msgid ""
 "GitHub</a>."
 msgstr "Froide是一个<a href=\"http://www.okfn.org\">开放信息基金会提供的免费开源项目。如果您希望支持Froide，请访问 <a href=\"%(url)s\">GitHub上的知识库</a>。"
 
-#: froide/templates/base.html:155
+#: froide/templates/base.html:159
 msgid "About"
 msgstr "关于"
 
-#: froide/templates/base.html:160 froide/templates/help/base.html:4
+#: froide/templates/base.html:164 froide/templates/help/base.html:4
 msgid "Help"
 msgstr "帮助"
 
-#: froide/templates/base.html:162
+#: froide/templates/base.html:166
 msgid "Terms of Use"
 msgstr "使用条款"
 
-#: froide/templates/base.html:165
+#: froide/templates/base.html:169
 msgid "Privacy Statement"
 msgstr "隐私声明"
 
@@ -4519,3 +4569,116 @@ msgstr "找不到您想要的？"
 #: froide/templates/search/search.html:69
 msgid "Make a Freedom of Information Request now!"
 msgstr "现在提出一个信息自由的请求！"
+
+#~ msgid "Add tags to these items"
+#~ msgstr "Add tags to these requests"
+
+#~ msgid "Hinweis zu dieser Behörde"
+#~ msgstr "Hinweis zu dieser Behörde"
+
+#~ msgid "Converted to PDF."
+#~ msgstr "Converted to PDF."
+
+#~ msgid "Message"
+#~ msgstr "Message"
+
+#~ msgid "and last name"
+#~ msgstr "and last name"
+
+#~ msgid "Your Email Address"
+#~ msgstr "Your Email Address"
+
+#~ msgid "Preview Request"
+#~ msgstr "Preview Request"
+
+#~ msgid "How to make a successful FOI Request"
+#~ msgstr "How to make a successful FOI Request"
+
+#~ msgid "Write a request to %(name)s"
+#~ msgstr "Write a request to %(name)s"
+
+#~ msgid "Topic:"
+#~ msgstr "Topic:"
+
+#~ msgid "Make a request"
+#~ msgstr "Make a request"
+
+#~ msgid "Status:"
+#~ msgstr "Status:"
+
+#~ msgid "No requests with this status yet."
+#~ msgstr "No requests with this status yet."
+
+#~ msgid "Count"
+#~ msgstr "Count"
+
+#~ msgid "Rank"
+#~ msgstr "Rank"
+
+#~ msgid "Topic"
+#~ msgstr "Topic"
+
+#~ msgid "Public Bodies by Topic"
+#~ msgstr "Public Bodies by Topic"
+
+#~ msgid "in alphabetical order"
+#~ msgstr "in alphabetical order"
+
+#~ msgid "No Public Bodies yet"
+#~ msgstr "No Public Bodies yet"
+
+#~ msgid "Click here to make a request to this Public Body"
+#~ msgstr "Click here to make a request to this Public Body"
+
+#~ msgid "Search Results for &quot;%(query)s&quot; in Public Bodies"
+#~ msgstr "Search Results for &quot;%(query)s&quot; in Public Bodies"
+
+#~ msgid ""
+#~ "\n"
+#~ "%(counter)s Public Body in Topic '%(name)s'"
+#~ msgid_plural ""
+#~ "\n"
+#~ "%(counter)s Public Bodies in Topic '%(name)s'"
+#~ msgstr[0] "28129e804577ec6c2115ed2b83e1bf82_pl_0"
+
+#~ msgid "back to list of topics"
+#~ msgstr "back to list of topics"
+
+#~ msgid "Make Request"
+#~ msgstr "Make Request"
+
+#~ msgid "More..."
+#~ msgstr "More..."
+
+#~ msgid "news"
+#~ msgstr "news"
+
+#~ msgid "Requests based on this article:"
+#~ msgstr "Requests based on this article:"
+
+#~ msgid "Request \"%(title)s\" to %(name)s"
+#~ msgstr "Request \"%(title)s\" to %(name)s"
+
+#~ msgid "Make a request based on this article:"
+#~ msgstr "Make a request based on this article:"
+
+#~ msgid "Make request to %(name)s"
+#~ msgstr "Make request to %(name)s"
+
+#~ msgid "Ideas for requests:"
+#~ msgstr "Ideas for requests:"
+
+#~ msgid "Provide an idea for a request based on this article"
+#~ msgstr "Provide an idea for a request based on this article"
+
+#~ msgid "Please login to provide an idea."
+#~ msgstr "Please login to provide an idea."
+
+#~ msgid "Read the news and make requests!"
+#~ msgstr "Read the news and make requests!"
+
+#~ msgid "As a moderator you are still able to publish it."
+#~ msgstr "As a moderator you are still able to publish it."
+
+#~ msgid "You received a reply to your Freedom of Information Request"
+#~ msgstr "You received a reply to your Freedom of Information Request"
