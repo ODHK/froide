@@ -73,16 +73,19 @@
           {% endif %}
         </div>
         {% else %}
-        <div id="sample-letter" class="frontpage-teaser">{% blocktrans %}Freedom of Information Request
+        <div id="sample-letter" class="frontpage-teaser">
+	  {% block sample_letter %}
+	  {% blocktrans %}Freedom of Information Request
 
-    To: Ministry of Interior
+	  To: Ministry of Interior
 
-    Dear Sir or Madam,
-    I request information about the following:
-    ...{% endblocktrans %}
-      <a class="make-request-icon" href="{% url 'foirequest-make_request' %}">{% blocktrans %}Write a Request Now!{% endblocktrans %}</a>
-      </div>
-      {% endif %}
+	  Dear Sir or Madam,
+	  I request information about the following:
+	  ...{% endblocktrans %}
+	  {% endblock %}
+	  <a class="make-request-icon" href="{% url 'foirequest-make_request' %}">{% blocktrans %}Write a Request Now!{% endblocktrans %}</a>
+	</div>
+	{% endif %}
       </div>
       {% endblock first_index_row_featured %}
     </div>
