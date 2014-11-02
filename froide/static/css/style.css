@@ -159,8 +159,7 @@ strong {
 #sample-letter {
     font-family: Georgia,serif;
     font-size: 1em;
-    white-space: nowrap;
-    white-space: pre-wrap;
+    white-space: pre-line;
 }
 
 
