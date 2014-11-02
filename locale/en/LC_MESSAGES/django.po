@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: froide\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 16:43+0200\n"
+"POT-Creation-Date: 2014-11-01 15:31+0100\n"
 "PO-Revision-Date: 2013-11-23 13:30+0000\n"
 "Last-Translator: stefanw <stefanwehrmeyer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,30 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: docs/_build/html/theming.html:97
-#, fuzzy
-msgid ""
-"Froide is a free and Open Source Project by &lt;a href=\"http://www.okfn.org"
-"\"&gt;the Open Knowledge Foundation&lt;/a&gt;."
-msgstr ""
-"Froide is a free and Open Source Project by <a href=\"http://www.okfn.org"
-"\">the Open Knowledge Foundation</a>. If you want to support Froide, please "
-"visit the <a href=\"%(url)s\">repository on GitHub</a>."
-
-#: docs/_build/html/_sources/theming.txt:53
-#, fuzzy
-msgid ""
-"Froide is a free and Open Source Project by <a href=\"http://www.okfn.org"
-"\">the Open Knowledge Foundation</a>."
-msgstr ""
-"Froide is a free and Open Source Project by <a href=\"http://www.okfn.org"
-"\">the Open Knowledge Foundation</a>. If you want to support Froide, please "
-"visit the <a href=\"%(url)s\">repository on GitHub</a>."
-
-#: froide/_local_settings.py:11 froide/settings.py:204 froide/settings.py:492
-msgid "German"
-msgstr ""
 
 #. Translators: URL part of /help/
 #: froide/help_urls.py:28
@@ -76,39 +52,43 @@ msgstr "for-foi-officers"
 msgid "donate"
 msgstr "donate"
 
-#: froide/settings.py:202
+#: froide/settings.py:214
 msgid "English"
 msgstr ""
 
-#: froide/settings.py:203
+#: froide/settings.py:215
 msgid "Finnish (Finland)"
 msgstr ""
 
-#: froide/settings.py:205
+#: froide/settings.py:216 froide/settings.py:504
+msgid "German"
+msgstr ""
+
+#: froide/settings.py:217
 msgid "Danish (Denmark)"
 msgstr ""
 
-#: froide/settings.py:206
+#: froide/settings.py:218
 msgid "Italian"
 msgstr ""
 
-#: froide/settings.py:207
+#: froide/settings.py:219
 msgid "Portuguese"
 msgstr ""
 
-#: froide/settings.py:208
+#: froide/settings.py:220
 msgid "Swedish (Sweden)"
 msgstr ""
 
-#: froide/settings.py:209
+#: froide/settings.py:221
 msgid "Swedish (Finland)"
 msgstr ""
 
-#: froide/settings.py:210
+#: froide/settings.py:222
 msgid "Chinese (Simplified)"
 msgstr ""
 
-#: froide/settings.py:211
+#: froide/settings.py:223
 msgid "Chinese (Traditional, Hong Kong)"
 msgstr ""
 
@@ -174,9 +154,18 @@ msgstr "search"
 msgid "help"
 msgstr "help"
 
-#: froide/account/admin.py:9
+#: froide/account/admin.py:12
 msgid "Profile info"
 msgstr "Profile info"
+
+#: froide/account/admin.py:43
+#, python-format
+msgid "%d send activation mail."
+msgstr ""
+
+#: froide/account/admin.py:44
+msgid "Resend activation mail"
+msgstr ""
 
 #: froide/account/forms.py:24
 msgid "First name"
@@ -248,6 +237,7 @@ msgstr ""
 "guarantee your anonymity"
 
 #: froide/account/forms.py:67
+#, python-brace-format
 msgid ""
 "<a target=\"_blank\" href=\"{url}\">You may use a pseudonym if you don't "
 "need to receive postal messages</a>."
@@ -4453,35 +4443,35 @@ msgid ""
 msgstr ""
 "Are we missing a public body? <a href=\"%(url)s\">Please let us know!</a>"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:14
+#: froide/publicbody/templates/publicbody/jurisdiction.html:17
 #, python-format
 msgid "Freedom of Information<br/>in %(name)s"
 msgstr "Freedom of Information<br/>in %(name)s"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:18
+#: froide/publicbody/templates/publicbody/jurisdiction.html:21
 msgid "Ask Public Bodies for administrative information — it's your right."
 msgstr "Ask Public Bodies for administrative information — it's your right."
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:29
+#: froide/publicbody/templates/publicbody/jurisdiction.html:32
 msgid "Which Public Bodies?"
 msgstr "Which Public Bodies?"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:33
+#: froide/publicbody/templates/publicbody/jurisdiction.html:36
 msgid "All bodies that work on administrative tasks of this jurisdiction."
 msgstr "All bodies that work on administrative tasks of this jurisdiction."
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:36
+#: froide/publicbody/templates/publicbody/jurisdiction.html:39
 #, python-format
 msgid ""
 "Make a request to one of <a href=\"%(url)s\">%(pb_count)s Public Bodies.</a>"
 msgstr ""
 "Make a request to one of <a href=\"%(url)s\">%(pb_count)s Public Bodies.</a>"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:45
+#: froide/publicbody/templates/publicbody/jurisdiction.html:48
 msgid "What Information?"
 msgstr "What Information?"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:48
+#: froide/publicbody/templates/publicbody/jurisdiction.html:51
 msgid ""
 "Contracts, memos, reports and other documents of the administration: you "
 "have the right to know."
@@ -4489,15 +4479,15 @@ msgstr ""
 "Contracts, memos, reports and other documents of the administration: you "
 "have the right to know."
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:51
+#: froide/publicbody/templates/publicbody/jurisdiction.html:54
 msgid "Make a request!"
 msgstr "Make a request!"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:60
+#: froide/publicbody/templates/publicbody/jurisdiction.html:63
 msgid "What right?"
 msgstr "What right?"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:63
+#: froide/publicbody/templates/publicbody/jurisdiction.html:66
 #, python-format
 msgid ""
 "The freedom of information law in %(name)s allows you access to "
@@ -4506,30 +4496,30 @@ msgstr ""
 "The freedom of information law in %(name)s allows you access to "
 "administrative information. "
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:66
+#: froide/publicbody/templates/publicbody/jurisdiction.html:69
 msgid "Get to know your right!"
 msgstr "Get to know your right!"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:88
+#: froide/publicbody/templates/publicbody/jurisdiction.html:102
 #, python-format
 msgid "Facts about %(name)s"
 msgstr "Facts about %(name)s"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:96
+#: froide/publicbody/templates/publicbody/jurisdiction.html:110
 #, python-format
 msgid "FOI laws in %(name)s"
 msgstr "FOI laws in %(name)s"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:104
+#: froide/publicbody/templates/publicbody/jurisdiction.html:118
 #, python-format
 msgid "came into effect on %(date)s"
 msgstr "came into effect on %(date)s"
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:108
+#: froide/publicbody/templates/publicbody/jurisdiction.html:122
 msgid "get to know this law..."
 msgstr "get to know this law..."
 
-#: froide/publicbody/templates/publicbody/jurisdiction.html:118
+#: froide/publicbody/templates/publicbody/jurisdiction.html:132
 #, python-format
 msgid "Requests in %(name)s"
 msgstr "Requests in %(name)s"
@@ -4712,11 +4702,12 @@ msgid "Log In /<br/>Sign up"
 msgstr "Log In /<br/>Sign up"
 
 #: froide/templates/base.html:141
-#, python-format
+#, fuzzy
 msgid ""
 "Froide is a free and Open Source Project by <a href=\"http://www.okfn.org"
 "\">the Open Knowledge Foundation</a>. If you want to support Froide, please "
-"visit the <a href=\"%(url)s\">repository on GitHub</a>."
+"visit the <a href=\"https://github.com/stefanw/froide\">repository on "
+"GitHub</a>."
 msgstr ""
 "Froide is a free and Open Source Project by <a href=\"http://www.okfn.org"
 "\">the Open Knowledge Foundation</a>. If you want to support Froide, please "
@@ -4775,15 +4766,16 @@ msgstr "Read the blog post"
 msgid "Visit this request"
 msgstr "Visit this request"
 
-#: froide/templates/index.html:76
+#: froide/templates/index.html:78
+#, fuzzy
 msgid ""
 "Freedom of Information Request\n"
 "\n"
-"    To: Ministry of Interior\n"
+"\t  To: Ministry of Interior\n"
 "\n"
-"    Dear Sir or Madam,\n"
-"    I request information about the following:\n"
-"    ..."
+"\t  Dear Sir or Madam,\n"
+"\t  I request information about the following:\n"
+"\t  ..."
 msgstr ""
 "Freedom of Information Request\n"
 "\n"
@@ -4793,15 +4785,15 @@ msgstr ""
 "    I request information about the following:\n"
 "    ..."
 
-#: froide/templates/index.html:83
+#: froide/templates/index.html:86
 msgid "Write a Request Now!"
 msgstr "Write a Request Now!"
 
-#: froide/templates/index.html:98
+#: froide/templates/index.html:101
 msgid "What is Freedom of Information?"
 msgstr "What is Freedom of Information?"
 
-#: froide/templates/index.html:99
+#: froide/templates/index.html:102
 msgid ""
 "Every citizen has the right under the Freedom of Information Laws to ask for "
 "and receive access to information from Public Bodies concerning public "
@@ -4811,15 +4803,15 @@ msgstr ""
 "and receive access to information from Public Bodies concerning public "
 "affairs."
 
-#: froide/templates/index.html:101
+#: froide/templates/index.html:104
 msgid "Read more about the Freedom of Information!"
 msgstr "Read more about the Freedom of Information!"
 
-#: froide/templates/index.html:108
+#: froide/templates/index.html:111
 msgid "What does this site do?"
 msgstr "What does this site do?"
 
-#: froide/templates/index.html:109
+#: froide/templates/index.html:112
 msgid ""
 "This site publishes Freedom of Information requests and replies so that "
 "others don't have to ask for the same information and replies can be "
@@ -4829,15 +4821,15 @@ msgstr ""
 "others don't have to ask for the same information and replies can be "
 "scrutinized by the public."
 
-#: froide/templates/index.html:111
+#: froide/templates/index.html:114
 msgid "Read more about the concept!"
 msgstr "Read more about the concept!"
 
-#: froide/templates/index.html:122
+#: froide/templates/index.html:125
 msgid "Successful Requests"
 msgstr "Successful Requests"
 
-#: froide/templates/index.html:134
+#: froide/templates/index.html:137
 msgid "Unsuccessful Requests"
 msgstr "Unsuccessful Requests"
 
@@ -4991,6 +4983,24 @@ msgstr "Couldn't find what you were looking for?"
 #: froide/templates/search/search.html:69
 msgid "Make a Freedom of Information Request now!"
 msgstr "Make a Freedom of Information Request now!"
+
+#, fuzzy
+#~ msgid ""
+#~ "Froide is a free and Open Source Project by &lt;a href=\"http://www.okfn."
+#~ "org\"&gt;the Open Knowledge Foundation&lt;/a&gt;."
+#~ msgstr ""
+#~ "Froide is a free and Open Source Project by <a href=\"http://www.okfn.org"
+#~ "\">the Open Knowledge Foundation</a>. If you want to support Froide, "
+#~ "please visit the <a href=\"%(url)s\">repository on GitHub</a>."
+
+#, fuzzy
+#~ msgid ""
+#~ "Froide is a free and Open Source Project by <a href=\"http://www.okfn.org"
+#~ "\">the Open Knowledge Foundation</a>."
+#~ msgstr ""
+#~ "Froide is a free and Open Source Project by <a href=\"http://www.okfn.org"
+#~ "\">the Open Knowledge Foundation</a>. If you want to support Froide, "
+#~ "please visit the <a href=\"%(url)s\">repository on GitHub</a>."
 
 #, fuzzy
 #~ msgid "Add tags to these items"
