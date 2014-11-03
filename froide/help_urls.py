@@ -42,6 +42,9 @@ urlpatterns = patterns("",
     # Translators: URL part of /help/
     (r'^%s/$' % _('for-foi-officers'), help_view,
         {'template': 'foi-officers.html'}, 'help-foi_officers'),
+    # Translators: URL part of /help/
+    (r'^%s/$' % _('unhappy'), help_view,
+        {'template': 'unhappy.html'}, 'help-unhappy'),
     (r'^%s/$' % _('donate'), help_view, {'template': 'donate.html'},
         'help-donate'),
 )
