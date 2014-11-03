@@ -40,8 +40,8 @@ urlpatterns = patterns("",
     (r'^%s/$' % _('your-privacy'), help_view,
         {'template': 'your-privacy.html'}, 'help-your_privacy'),
     # Translators: URL part of /help/
-    (r'^%s/$' % _('for-foi-officers'), help_view,
-        {'template': 'foi-officers.html'}, 'help-foi_officers'),
+    (r'^%s/$' % _('for-ai-officers'), help_view,
+        {'template': 'ai-officers.html'}, 'help-ai_officers'),
     # Translators: URL part of /help/
     (r'^%s/$' % _('unhappy'), help_view,
         {'template': 'unhappy.html'}, 'help-unhappy'),
