@@ -1,5 +1,5 @@
 include README.md LICENSE.txt
 recursive-include froide/templates *.html *.txt
 recursive-include froide/**/templates *.html *.txt
-recursive-include froide/static
+recursive-include froide/static *
 recursive-include locale *.po
