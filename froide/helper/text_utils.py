@@ -7,8 +7,9 @@ except ImportError:
     from htmlentitydefs import name2codepoint
 
 from django.utils.six import text_type as str, unichr as chr
-from django.utils.safestring import mark_safe
-from django.utils.html import escape
+
+SEPARATORS = re.compile(r'(\s*-{5}\w+ \w+-{5}\s*|^--\s*$)', re.UNICODE | re.M)
+
 
 ##
 # From http://effbot.org/zone/re-sub.htm#unescape-html
@@ -40,47 +41,21 @@ def unescape(text):
     return re.sub("&#?\w+;", fixup, text)
 
 
-def shorten_text(text, quote_prefix=u">", separators=None,
-                 wrapper_start=u'<a href="#" class="show-text">…</a><div class="hidden-text">',
-                 wrapper_end='</div>'):
-    if separators is None:
-        separators = [re.compile('\s*-{5}\w+ \w+-{5}\s*', re.UNICODE), re.compile(r'^--\s*$')]
-    lines = []
-    hidden = []
-    hide_rest = False
-    text_lines = text.splitlines()
-    for i, line in enumerate(text_lines):
-        for qs in separators:
-            if qs.match(line) is not None:
-                hidden.extend(text_lines[i:])
-                hide_rest = True
-                break
-        if hide_rest:
-            break
-        if line.strip().startswith(quote_prefix):
-            hidden.append(line)
-            lines.append(None)
-            continue
-        lines.append(line)
-        hidden.append(None)
+def split_text_by_separator(text, separator=None):
+    if separator is None:
+        separator = SEPARATORS
+    split_text = separator.split(text)
+    if len(split_text) == 1:
+        split_text.append('')
+    if len(split_text) > 2:
+        split_text = [split_text[0], '\n'.join(split_text[1:])]
+    return split_text
 
-    new_text = []
-    hiding = False
-    for i, hidden_line in enumerate(hidden):
-        if hidden_line is None:
-            if hiding:
-                hiding = False
-                new_text.append(wrapper_end)
-            new_text.append(escape(lines[i]))
-        else:
-            if not hiding:
-                new_text.append(wrapper_start)
-                hiding = True
-            new_text.append(escape(hidden_line))
-    if hiding:
-        new_text.append(wrapper_end)
 
-    return mark_safe(u"\n".join(new_text))
+def replace_word(needle, replacement, content):
+    return re.sub('(^|\W)%s($|\W)' % re.escape(needle),
+                    '\\1%s\\2' % replacement, content, re.U)
+
 
 EMAIL_NAME_RE = re.compile(r'<[^\s]+@[^\s]+>')
 
@@ -93,3 +68,21 @@ EMAIL_RE = re.compile(r'[^\s]+@[^\s]+')
 
 def replace_email(text, replacement=u""):
     return EMAIL_RE.sub(str(replacement), text)
+
+
+def replace_greetings(content, greetings, replacement):
+    for greeting in greetings:
+        match = greeting.search(content)
+        if match is not None and len(match.groups()):
+            content = content.replace(match.group(1),
+                replacement)
+    return content
+
+
+def remove_closing(content, closings):
+    for closing in closings:
+        match = closing.search(content)
+        if match is not None:
+            content = content[:match.end()]
+            break
+    return content

@@ -31,7 +31,8 @@ from taggit.models import TaggedItemBase
 from froide.publicbody.models import PublicBody, FoiLaw, Jurisdiction
 from froide.helper.email_utils import make_address
 from froide.helper.text_utils import (replace_email_name,
-        replace_email, shorten_text)
+        replace_email, remove_closing, replace_greetings)
+
 
 from .foi_mail import send_foi_mail, package_foirequest
 
@@ -1285,12 +1286,10 @@ class FoiMessage(models.Model):
         if self.plaintext_redacted is None:
             self.plaintext_redacted = self.redact_plaintext()
             self.save()
-        return shorten_text(self.plaintext_redacted)
+        return self.plaintext_redacted
 
     def redact_plaintext(self):
         content = self.plaintext
-        if self.request.user:
-            content = self.request.user.apply_message_redaction(content)
 
         content = replace_email_name(content, _("<<name and email address>>"))
         content = replace_email(content, _("<<email address>>"))
@@ -1300,25 +1299,22 @@ class FoiMessage(models.Model):
         if not settings.FROIDE_CONFIG.get('public_body_officials_public'):
             if self.is_response:
                 if settings.FROIDE_CONFIG.get('closings'):
-                    for closing in settings.FROIDE_CONFIG['closings']:
-                        match = closing.search(content)
-                        if match is not None:
-                            content = content[:match.end()]
-                            break
+                    content = remove_closing(content,
+                                settings.FROIDE_CONFIG['closings'])
+
             else:
                 if settings.FROIDE_CONFIG.get('greetings'):
-                    for greeting in settings.FROIDE_CONFIG['greetings']:
-                        match = greeting.search(content)
-                        if match is not None and len(match.groups()):
-                            content = content.replace(match.group(1),
-                                greeting_replacement)
+                    content = replace_greetings(content,
+                            settings.FROIDE_CONFIG['greetings'],
+                            greeting_replacement)
+
+        if self.request.user:
+            content = self.request.user.apply_message_redaction(content)
 
         return content
 
     def get_real_content(self):
         content = self.content
-        content = replace_email(content, _("<<email address>>"))
-        content = shorten_text(content)
         return content
 
     def clean(self):
