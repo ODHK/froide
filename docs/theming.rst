@@ -4,7 +4,7 @@ Theming Froide
 
 If want to customize the look of your own Froide instance or add other pages to it, you can create a theme and install it in your Froide instance.
 
-See the `FragDenStaat.de Theme <https://github.com/okfde/fragdenstaat_de>`_ as a real-life example or use the `Basic Froide Theme <https://github.com/okfn/froide-theme>`_ as a starting point.
+See the `FragDenStaat.de Theme <https://github.com/okfde/fragdenstaat_de>`_ as a real-life example or use the `Basic Froide Theme <https://github.com/okfde/froide-theme>`_ as a starting point.
 
 Basics
 ------
@@ -57,3 +57,12 @@ An example for the `base.html` template could look like this::
 This will only override the footer description of the `base.html` template.
 
 Have a look at the Froide templates to find block you can override. If you need to override a specific part that is not enclosed in a block tag yet, open a pull request. More blocks are always welcome.
+
+
+Help URLs and Flatpages
+-----------------------
+
+The following standard URL names are referenced from templates: ``help-index``, ``help-about``, ``help-terms`` and ``help-privacy``.
+You can create Django Flatpages for these URLs or their appropriate translations: ``/help/``, ``/help/about/``, ``/help/terms/`` and ``/help/privacy/``.
+
+You can overwrite these URLs by their name in the root URL conf of your theme. You can also overwrite their base templates.
